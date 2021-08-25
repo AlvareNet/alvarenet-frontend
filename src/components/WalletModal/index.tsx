@@ -121,7 +121,7 @@ export default function WalletModal(){
 
     return (
       <>
-          <Button  onClick={handleShow}>
+          <Button variant="contained" onClick={handleShow} disableElevation>
             {active ? account : 'Connect Wallet' }
           </Button>
     

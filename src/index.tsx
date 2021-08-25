@@ -16,9 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
       <Web3ProviderNetwork getLibrary={getLibrary}>
-        <ThemeProvider theme={themeOptions}>
           <App />
-        </ThemeProvider>
       </Web3ProviderNetwork>
     </Web3ReactProvider>
 
