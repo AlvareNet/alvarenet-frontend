@@ -1,14 +1,28 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { AppBar, Slide, Toolbar, Typography, useScrollTrigger } from "@material-ui/core";
 import logo from "../../pages/logo.svg"
 import WalletModal from "../WalletModal";
 
-
-export default function Header() {
+function HideOnScroll(props: { children: any; window: any; }) {
+    const { children, window } = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+      target: window ? window() : undefined,
+    });
+  
     return (
-        <>
-           <Navbar bg="light" variant="light">
-               <Container>
-                    <Navbar.Brand>
+      <Slide appear={false} direction="down" in={!trigger}>
+        {children}
+      </Slide>
+    );
+  }
+
+export default function Header(props: any) {
+    return (
+        <HideOnScroll {...props}>
+           <AppBar>
+               <Toolbar>
                     <img
                         alt=""
                         src={logo}
@@ -16,13 +30,13 @@ export default function Header() {
                         height="30"
                         className="d-inline-block align-top"
                         />{' '}
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         AlvareNET
-                    </Navbar.Brand>
-                    <Nav>
-                        <WalletModal></WalletModal>
-                    </Nav>
-               </Container>
-           </Navbar>
-       </>
+                    </Typography>
+                    <WalletModal/>
+               </Toolbar>
+           </AppBar>
+        </HideOnScroll>
+
     )
 }

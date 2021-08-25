@@ -7,7 +7,7 @@ import { NetworkContextName } from "../../constants/misc"
 import { network } from '../../connectors'
 import Loader from "../Loader"
 import styled from "styled-components"
-import { Button } from "react-bootstrap"
+import { Button } from "@material-ui/core"
 
 const MessageWrapper = styled.div`
   display: flex;
