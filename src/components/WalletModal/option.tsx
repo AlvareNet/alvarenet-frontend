@@ -1,18 +1,16 @@
-import { Card } from "react-bootstrap";
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@material-ui/core";
 import styled from "styled-components";
 
 const IconWrapper = styled.div<{ size?: number | null }>`
-  ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
   justify-content: center;
   & > img,
   span {
-    height: ${({ size }) => (size ? size + 'px' : '24px')};
-    width: ${({ size }) => (size ? size + 'px' : '24px')};
-  }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    align-items: flex-end;
-  `};
+    height: ${({ size }) => (size ? size + 'px' : '50px')};
+    width: ${({ size }) => (size ? size + 'px' : '50px')};
+    margin-bottom: 10px;
+  },
+
 `
 
 export default function Option ({
@@ -41,14 +39,21 @@ export default function Option ({
 }
 ){
     const content = (
-        <Card onClick={onClick} id={id} >
-            <Card.Body>
-                <IconWrapper size={size}>
-                    <img src={icon} alt={'Icon'} />
-                </IconWrapper>
-                <Card.Title>{header}</Card.Title>
-                {subheader && <Card.Text>{subheader}</Card.Text>}
-            </Card.Body>
+        <Card sx={{ maxWidth: 345 }}>
+        <CardActionArea onClick={onClick}>
+          <CardContent>
+            <IconWrapper size={size}>
+                <img src={icon} alt={'Icon'}  />
+            </IconWrapper>
+            <Typography gutterBottom variant="h5" component="div" align="center">
+                {header}
+            </Typography>
+            {subheader && 
+            <Typography variant="body2" color="text.secondary">
+            {subheader}
+            </Typography>}
+          </CardContent>
+        </CardActionArea>
         </Card>
     )
     return content
