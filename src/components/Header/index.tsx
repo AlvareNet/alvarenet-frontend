@@ -1,6 +1,8 @@
 import { AppBar, Slide, Toolbar, Typography, useScrollTrigger } from "@material-ui/core";
 import logo from "../../pages/logo.svg"
 import WalletModal from "../WalletModal";
+import Claim from "../Claim";
+
 
 function HideOnScroll(props: { children: any; window: any; }) {
     const { children, window } = props;
@@ -34,6 +36,7 @@ export default function Header(props: any) {
                         AlvareNET
                     </Typography>
                     <WalletModal/>
+                    <Claim/>
                </Toolbar>
            </AppBar>
         </HideOnScroll>
