@@ -11,12 +11,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider } from '@material-ui/core';
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
+const theme = themeOptions
 
 ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
       <Web3ProviderNetwork getLibrary={getLibrary}>
+        <ThemeProvider theme={theme}>
           <App />
+        </ThemeProvider>
       </Web3ProviderNetwork>
     </Web3ReactProvider>
 

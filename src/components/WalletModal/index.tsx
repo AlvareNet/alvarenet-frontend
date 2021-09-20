@@ -2,7 +2,6 @@ import { AbstractConnector } from "@web3-react/abstract-connector"
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
 import { isMobile } from 'react-device-detect'
 import { useState } from "react"
-
 import { injected } from "../../connectors"
 import { SUPPORTED_WALLETS } from "../../constants/wallet"
 import Option from "./option"
@@ -126,8 +125,9 @@ export default function WalletModal(){
             {active ? account : 'Connect Wallet' }
           </Button>
     
-          <Dialog open={show} onClose={handleClose}>
-            <DialogTitle>
+          <Dialog open={show} onClose={handleClose} sx={{
+            background:"rgba(0,0,0,0.5)"}}>
+            <DialogTitle sx={{textAlign: "center"}}>
               Select a Wallet
             </DialogTitle>
             <DialogContent>{getOptions()}</DialogContent>
