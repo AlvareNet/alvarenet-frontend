@@ -1,8 +1,8 @@
-import { Box, Drawer } from "@material-ui/core";
-import MenuList from "./menuList"
+import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Home, SwapHoriz } from "@material-ui/icons";
 
-export default function SideMenu(props: any) {
-
+export default function SideMenu(page: any, updatePage: any) {
+    updatePage("Home")
     return (
         <>
             <Drawer
@@ -25,7 +25,20 @@ export default function SideMenu(props: any) {
                     }
                 }} >
                 <Box>
-                    <MenuList changePage={props.changePage}/>
+                    <List>
+                        <ListItem button key={"Home"}>
+                            <ListItemIcon>
+                                <Home />
+                            </ListItemIcon>
+                            <ListItemText primary={"Home"} />
+                        </ListItem>
+                        <ListItem button key={"Swap"}>
+                            <ListItemIcon>
+                                <SwapHoriz />
+                            </ListItemIcon>
+                            <ListItemText primary={"Swap"} />
+                        </ListItem>
+                    </List>
                 </Box>
             </Drawer>
         </>
