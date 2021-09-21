@@ -1,4 +1,4 @@
-import { Button, Box, Grid } from "@material-ui/core"
+import { Button, Box, Grid, Typography } from "@material-ui/core"
 import { useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 
@@ -17,13 +17,28 @@ export default function Claim() {
 
   if (available) {
     return (
-      <Box>
-        <img src={AlvareNet_Logo} alt="" />
-        <Button onClick={onClaim}>
+      <Grid container justifyContent="center">
+        <Grid item md={12} xs={12}>
+          <Grid container justifyContent="space-around">
+            <Grid item md={12} sx={{
+              backgroundImage: `url(${AlvareNet_Logo})`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              width: '200px',
+              height: '200px'
+            }}>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item md={12} xs={12}>
+          <Grid container justifyContent="center">
+          <Button onClick={onClaim}>
           {"Claim " + number.toString()}
         </Button>
-      </Box>
-
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
   else {
@@ -40,6 +55,11 @@ export default function Claim() {
               height: '200px'
             }}>
             </Grid>
+          </Grid>
+        </Grid>
+        <Grid item md={12} xs={12}>
+          <Grid container justifyContent="center">
+            <Typography variant="h5">No token to claim!</Typography>
           </Grid>
         </Grid>
       </Grid>
