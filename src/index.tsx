@@ -22,7 +22,6 @@ ReactDOM.render(
         </ThemeProvider>
       </Web3ProviderNetwork>
     </Web3ReactProvider>
-
   </React.StrictMode>,
   document.getElementById('root')
 );
