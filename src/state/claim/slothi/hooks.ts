@@ -73,13 +73,16 @@ function fetchClaim(account: string): Promise<UserClaimData> {
 
 // parse distributorContract blob and detect if user has claim data
 // null means we know it does not
-export function useUserClaimData(): [UserClaimData | null, string | null] | null {
+export function useUserClaimData(): { [account: string]: UserClaimData } {
   const { chainId, account } = useActiveWeb3React()
 
-  const [claimInfo, setClaimInfo] = useState<{ [account: string]: UserClaimData | null }>({})
+  const [claimInfo, setClaimInfo] = useState<{ [account: string]: UserClaimData }>({})
   
   useEffect(() => {
-    if (!account || (chainId !== 56 && chainId !== 97 && chainId !== 1337)) return
+    if (!account || (chainId !== 56 && chainId !== 97 && chainId !== 1337)) {
+      setClaimInfo({})
+      return
+    }
 
     fetchClaim(account)
       .then((accountClaimInfo) =>
@@ -91,34 +94,30 @@ export function useUserClaimData(): [UserClaimData | null, string | null] | null
         })
       )
       .catch(() => {
-        setClaimInfo((claimInfo) => {
-          return {
-            ...claimInfo,
-            [account]: null,
-          }
-        })
+        setClaimInfo({})
       })
   }, [account, chainId])
 
-  return account && (chainId === 56 || chainId === 97 || chainId === 1337) ? [claimInfo[account], account] : null
+  return claimInfo
 }
 
 // check if user is in blob and has not yet claimed UNI
 export function useUserHasAvailableClaim(): boolean {
   const userClaimData = useUserClaimData()
+  const { account } = useActiveWeb3React()
 
   const [claimData, setClaimInfo] = useState<boolean>(false)
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
   useEffect(() => {
-  if(userClaimData && userClaimData[1] && userClaimData[0]){
-    distributorContracts?.isClaimed(userClaimData[1]).then(
+  if(userClaimData && account && userClaimData[account]){
+    distributorContracts?.isClaimed(account).then(
       (result) => {
         setClaimInfo(!result)
       }
     );
 
-  }}, [userClaimData]
+  }}, [userClaimData, distributorContracts, account]
   )
   // user is in blob and contract marks as unclaimed
   return claimData;
@@ -138,7 +137,7 @@ export function useUserUnclaimedAmount(): BigNumber {
     }
     )
 
-  }}, [userClaimData]
+  }}, [userClaimData, distributorContracts]
   )
   // user is in blob and contract marks as unclaimed
   return claimAmount;
