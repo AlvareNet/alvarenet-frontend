@@ -1,8 +1,11 @@
 import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { Home, SwapHoriz } from "@material-ui/icons";
+import MenuList from "./menuList"
+import { useWeb3React } from "@web3-react/core"
 
-export default function SideMenu(page: any, updatePage: any) {
-    updatePage("Home")
+export default function SideMenu(props: any) {
+    const { active, account, connector, activate, error } = useWeb3React()
+    
     return (
         <>
             <Drawer
@@ -16,8 +19,8 @@ export default function SideMenu(page: any, updatePage: any) {
                         marginTop: '200px',
                         borderTop: '1px solid rgba(0,0,0,0.12)',
                         borderTopRightRadius: '25px',
-                        WebkitBoxShadow: "10px -5px 10px 0px rgba(0,0,0,0.1)",
-                        boxShadow: "10px -5px 10px 0px rgba(0,0,0,0.1)",
+                        WebkitBoxShadow: ((active) ? "10px -5px 10px 0px rgba(0,255,0,0.1)" : "10px -5px 10px 0px rgba(255,0,0,0.1)"),
+                        boxShadow: ((active) ? "10px -5px 10px 0px rgba(0,255,0,0.1)" : "10px -5px 10px 0px rgba(255,0,0,0.1)"),
                     },
                     display: {
                         xs: "none",
@@ -25,20 +28,10 @@ export default function SideMenu(page: any, updatePage: any) {
                     }
                 }} >
                 <Box>
-                    <List>
-                        <ListItem button key={"Home"}>
-                            <ListItemIcon>
-                                <Home />
-                            </ListItemIcon>
-                            <ListItemText primary={"Home"} />
-                        </ListItem>
-                        <ListItem button key={"Swap"}>
-                            <ListItemIcon>
-                                <SwapHoriz />
-                            </ListItemIcon>
-                            <ListItemText primary={"Swap"} />
-                        </ListItem>
-                    </List>
+                    <MenuList changePage={props.changePage} />
+                </Box>
+                <Box>
+                    {active ? account : 'not connected'}
                 </Box>
             </Drawer>
         </>
