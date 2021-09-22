@@ -110,6 +110,7 @@ export function useUserHasAvailableClaim(): boolean {
   const [claimData, setClaimInfo] = useState<boolean>(false)
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
+  useEffect(() => {
   if(userClaimData && userClaimData[1] && userClaimData[0]){
     distributorContracts?.isClaimed(userClaimData[1]).then(
       (result) => {
@@ -117,7 +118,8 @@ export function useUserHasAvailableClaim(): boolean {
       }
     );
 
-  }
+  }}, [userClaimData]
+  )
   // user is in blob and contract marks as unclaimed
   return claimData;
 }
@@ -129,13 +131,15 @@ export function useUserUnclaimedAmount(): BigNumber {
   const [claimAmount, setClaimAmount] = useState<BigNumber>(BigNumber.from("0"))
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
+  useEffect(() =>{
   if(userClaimData && userClaimData[1] && userClaimData[0]){
     distributorContracts?.getBalance(userClaimData[0].amount).then((result) =>{
       setClaimAmount(BigNumber.from(result))
     }
     )
 
-  }
+  }}, [userClaimData]
+  )
   // user is in blob and contract marks as unclaimed
   return claimAmount;
 }
