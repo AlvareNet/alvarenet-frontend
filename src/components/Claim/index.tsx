@@ -1,11 +1,16 @@
 import { Button, Box, Grid, Typography } from "@material-ui/core"
 import { useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
+import NumberFormat from 'react-number-format';
+import { useWeb3React } from "@web3-react/core"
 
 export default function Claim() {
   const number = useUserUnclaimedAmount()
   const available = useUserHasAvailableClaim()
   const { claimCallback } = useClaimCallback()
+  const amount = number.div(1000000000).toString()
+  const { active } = useWeb3React()
+  
   function onClaim() {
     claimCallback().then((result) => console.log(result))
       // reset modal and log error
@@ -15,9 +20,11 @@ export default function Claim() {
   }
 
 
-  if (available) {
+  if (available && active) {
     return (
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" boxShadow={2} sx={{
+        padding: '30px'
+      }}>
         <Grid item md={12} xs={12}>
           <Grid container justifyContent="space-around">
             <Grid item md={12} sx={{
@@ -33,9 +40,18 @@ export default function Claim() {
         </Grid>
         <Grid item md={12} xs={12}>
           <Grid container justifyContent="center">
-          <Button onClick={onClaim}>
-          {"Claim " + number.toString()}
-        </Button>
+            <NumberFormat
+              displayType="text"
+              className="foo"
+              value={amount.toString()}
+              thousandSeparator={true}
+              suffix={" ANET available"}
+            />
+          </Grid>
+          <Grid container justifyContent="center" sx={{marginTop: "20px"}}>
+            <Button onClick={onClaim} variant="contained">
+              {"Claim now"}
+            </Button>
           </Grid>
         </Grid>
       </Grid>
@@ -43,7 +59,9 @@ export default function Claim() {
   }
   else {
     return (
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" boxShadow={2} sx={{
+        padding: '30px'
+      }}>
         <Grid item md={12} xs={12}>
           <Grid container justifyContent="space-around">
             <Grid item md={12} sx={{
