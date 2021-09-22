@@ -126,13 +126,14 @@ export function useUserHasAvailableClaim(): boolean {
 // check if user is in blob and has not yet claimed UNI
 export function useUserUnclaimedAmount(): BigNumber {
   const userClaimData = useUserClaimData()
+  const { account } = useActiveWeb3React()
 
   const [claimAmount, setClaimAmount] = useState<BigNumber>(BigNumber.from("0"))
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
   useEffect(() =>{
-  if(userClaimData && userClaimData[1] && userClaimData[0]){
-    distributorContracts?.getBalance(userClaimData[0].amount).then((result) =>{
+  if(userClaimData && account && userClaimData[account] && userClaimData[account].amount){
+    distributorContracts?.getBalance(userClaimData[account].amount).then((result) =>{
       setClaimAmount(BigNumber.from(result))
     }
     )
@@ -155,9 +156,9 @@ export function useClaimCallback(): {
   const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
 
   const claimCallback = async function () {
-    if (!claimData || !claimData[0] || !claimData[1] || !account || !library || !chainId || !distributorContract) return ""
+    if (!claimData || !account || !claimData[account] || !claimData[account].amount || !library || !chainId || !distributorContract) return ""
 
-    const args = [claimData[0].index, account, claimData[0].amount, claimData[0].proof] as const
+    const args = [claimData[account].index, account, claimData[account].amount, claimData[account].proof] as const
 
       return distributorContract
         .claim(...args)
