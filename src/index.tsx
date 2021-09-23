@@ -9,6 +9,7 @@ import { NetworkContextName } from './constants/misc';
 import { themeOptions } from './theme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider } from '@material-ui/core';
+import './i18n';
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 const theme = themeOptions

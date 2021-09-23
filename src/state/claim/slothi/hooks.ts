@@ -102,11 +102,11 @@ export function useUserClaimData(): { [account: string]: UserClaimData } {
 }
 
 // check if user is in blob and has not yet claimed UNI
-export function useUserHasAvailableClaim(): boolean {
+export function useUserHasAvailableClaim(): any {
   const userClaimData = useUserClaimData()
   const { account } = useActiveWeb3React()
 
-  const [claimData, setClaimInfo] = useState<boolean>(false)
+  const [claimData, setClaimInfo] = useState<any>(null)
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
   useEffect(() => {

@@ -9,9 +9,10 @@ import MetamaskIcon from '../../assets/images/metamask.png'
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
 import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core"
 import { connected } from "process"
-
+import { useTranslation } from 'react-i18next';
 
 export default function WalletModal() {
+  const { t } = useTranslation();
   const { active, account, connector, activate, deactivate ,error } = useWeb3React()
 
   const [show, setShow] = useState(false);
@@ -132,14 +133,14 @@ export default function WalletModal() {
   return (
     <>
       <Button variant="contained" onClick={active ? handleDisconnect : handleShow} disableElevation>
-        {active ? 'Disconnect' : 'Connect Wallet'}
+        {active ? t("walletConnect.buttonDisconnect") : t("walletConnect.buttonConnect")}
       </Button>
 
       <Dialog open={show} onClose={handleClose} sx={{
         background: "rgba(0,0,0,0.5)"
       }}>
         <DialogTitle sx={{ textAlign: "center" }}>
-          Select a Wallet
+          {t("walletConnect.selectWallet")}
         </DialogTitle>
         <DialogContent>{getOptions()}</DialogContent>
       </Dialog>
