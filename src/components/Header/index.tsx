@@ -2,7 +2,9 @@ import { AppBar, Toolbar, Typography, Grid, Box, IconButton, Drawer } from "@mat
 import WalletModal from "../WalletModal";
 import { Menu } from "@material-ui/icons"
 import banner_light from '../../assets/images/banner_light.png'
+import banner_dark from '../../assets/images/banner_black.png'
 import logo from "../../assets/images/logo.svg"
+import logoDark from "../../assets/images/logo_light.svg"
 import { useState } from 'react';
 import MenuList from '../SideMenu/menuList'
 
@@ -19,12 +21,12 @@ export default function Header(props: any) {
   return (
     <>
       <AppBar sx={{
-        backgroundColor: "rgba(255,255,255,0.5) !important"
+        backgroundColor: props.darkMode ? "rgba(255,255,255,0.5) !important" : "rgba(0,0,0,0.5) !important"
       }}>
         <Toolbar >
           <Grid container justifyContent="space-between" alignContent="center" alignItems="center">
             <Grid item sx={{
-              backgroundImage: `url(${logo})`,
+              backgroundImage: props.darkMode ? `url(${logo})` : `url(${logoDark})`,
               width: '200px',
               height: '50px',
               backgroundSize: 'cover',
@@ -55,13 +57,13 @@ export default function Header(props: any) {
         marginTop: "-65px",
         height: "290px",
         zIndex: "-1",
-        backgroundColor: "#25adba",
-        backgroundImage: `url(${banner_light})`,
+        backgroundColor: props.darkMode ? '#fff' : '#303030',
+        backgroundImage: props.darkMode ? `url(${banner_light})` : `url(${banner_dark})`,
         backgroundSize: "cover",
         backgroundPosition: "bottom",
       }}>
         <Box sx={{
-          backgroundImage: `url(${logo})`,
+          backgroundImage: props.darkMode ? `url(${logo})` : `url(${logoDark})`,
           width: '260px',
           height: '65px',
           backgroundSize: 'cover',

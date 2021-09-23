@@ -21,6 +21,7 @@ export default function SideMenu(props: any) {
                         borderTopRightRadius: '25px',
                         WebkitBoxShadow: "10px -5px 10px 0px rgba(0,0,0,0.1)",
                         boxShadow: "10px -5px 10px 0px rgba(0,0,0,0.1)",
+                        background: (theme) => theme.palette.mode === "light" ? '#fff' : '#303030' 
                     },
                     display: {
                         xs: "none",

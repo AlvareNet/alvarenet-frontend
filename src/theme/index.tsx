@@ -1,18 +1,25 @@
 import { createTheme, Theme, ThemeOptions } from '@material-ui/core/styles';
 
-export const themeOptions: Theme = createTheme({
+export const themeOptionsLight: Theme = createTheme( {
   palette: {
+    mode: "light",
+    background: {
+      default: "#fff"
+    },
     primary: {
-      light: '#757ce8',
-      main: '#1073B7',
-      dark: '#1848A0',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
+      main: "#0F73B7",
+    }
   },
+});
+
+export const themeOptionsDark: Theme = createTheme( {
+  palette: {
+    mode: "dark", 
+    background: {
+      default: "#303030"
+    },
+    primary: {
+      main: "#0F73B7",
+    }
+  }
 });

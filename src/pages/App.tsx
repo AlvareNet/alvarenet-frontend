@@ -3,10 +3,13 @@ import Web3Manager from '../components/Web3Manager';
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
 import styled from 'styled-components';
-import { CssBaseline } from "@material-ui/core"
+import { ThemeProvider, CssBaseline, Fab } from "@material-ui/core"
 import Claim from "../components/Claim";
 import Home from "./Home"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { LightMode, DarkMode } from "@material-ui/icons"
+import { themeOptionsLight, themeOptionsDark } from '../theme'
+import { createTheme } from '@material-ui/core/styles';
 
 const AppWrapper = styled.div`
   display: flex;
@@ -26,16 +29,22 @@ const Page = styled('div')(({ theme }) => ({
 }));
 
 function App() {
-  const [page,setPage] = useState<string>("Home")
+  const [page, setPage] = useState<string>("Home")
   function handleChange(newPage: string) {
     setPage(newPage)
+  }
+
+  const [mode, setMode] = useState<Boolean>(false)
+  function handleDarkMode() {
+    setMode(!mode)
+    console.log(mode)
   }
 
   let pageDiv
 
   switch (page) {
     case "Home":
-      pageDiv =  <Home />
+      pageDiv = <Home />
       break
     case "Claim":
       pageDiv = <Claim />
@@ -47,18 +56,23 @@ function App() {
 
   return (
     <>
-      <CssBaseline />
-      <Web3Manager>
-        <AppWrapper>
-          <Header changePage={handleChange}/>
-          <div>
-            <SideMenu page={page} changePage={handleChange}/>
-            <Page>
-              {pageDiv}
-            </Page>
-          </div>
-        </AppWrapper>
-      </Web3Manager>
+      <ThemeProvider theme={mode ? themeOptionsLight : themeOptionsDark}>
+        <CssBaseline />
+        <Web3Manager>
+          <AppWrapper>
+            <Header changePage={handleChange} darkMode={mode}/>
+            <div>
+              <SideMenu page={page} changePage={handleChange} />
+              <Page>
+                {pageDiv}
+              </Page>
+            </div>
+            <Fab color="primary" aria-label="add" sx={{ position: 'absolute', bottom: '16px', right: '16px' }} onClick={handleDarkMode}>
+              {mode ? <DarkMode /> : <LightMode />}
+            </Fab>
+          </AppWrapper>
+        </Web3Manager>
+      </ThemeProvider>
     </>
   );
 }

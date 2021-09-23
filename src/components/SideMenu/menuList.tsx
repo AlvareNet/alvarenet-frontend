@@ -7,7 +7,7 @@ export default function MenuList(props: any) {
 
     return (
         <>
-            <Grid container direction="column" justifyContent="space-between" sx={{ height: "100%"}} xs={12} md={12} spacing={0}>
+            <Grid container direction="column" justifyContent="space-between" sx={{ height: "100%"}} spacing={0}>
                 <Grid container item>
                     <Typography variant="h6" color="primary" sx={{
                         padding: '15px',
@@ -29,10 +29,10 @@ export default function MenuList(props: any) {
                 </Grid>
                 <Grid container item justifyContent="Center">
                     <div>
-                        <Button key="de" onClick={() => i18n.changeLanguage("de")}>
+                        <Button key="de" onClick={() => i18n.changeLanguage("de")} style={{ fontWeight: i18n.resolvedLanguage === "de" ? 'bold' : 'normal' }}>
                             {t('lang.de')}
-                        </Button>
-                        <Button key="en" onClick={() => i18n.changeLanguage("en")}>
+                        </Button>|
+                        <Button key="en" onClick={() => i18n.changeLanguage("en")} style={{ fontWeight: i18n.resolvedLanguage === "en" ? 'bold' : 'normal' }}>
                             {t('lang.en')}
                         </Button>
                     </div>
