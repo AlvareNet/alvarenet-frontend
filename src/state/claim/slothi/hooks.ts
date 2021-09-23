@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { isAddress, getAddress} from "@ethersproject/address"
+import { isAddress, getAddress } from "@ethersproject/address"
 import { useActiveWeb3React } from '../../../hooks/useWeb3'
 import { SLOTHI_MERKLE_DISTRIBUTER } from "../../../constants/contracts"
 import { useMerkleDistributorContract } from "../../../hooks/useContract"
@@ -44,7 +44,7 @@ function fetchClaimFile(key: string): Promise<{ [address: string]: UserClaimData
 const FETCH_CLAIM_PROMISES: { [key: string]: Promise<UserClaimData> } = {}
 // returns the claim for the given address, or null if not valid
 function fetchClaim(account: string): Promise<UserClaimData> {
-  if(!isAddress(account)){
+  if (!isAddress(account)) {
     return Promise.reject(new Error('Invalid address'))
   }
   const formatted = getAddress(account).toLowerCase()
@@ -54,7 +54,7 @@ function fetchClaim(account: string): Promise<UserClaimData> {
     (FETCH_CLAIM_PROMISES[account] = fetchClaimMapping()
       .then((mapping) => {
         for (const data of mapping) {
-          if(data.start.toLowerCase() <= formatted.toLowerCase() && data.stop.toLowerCase() >= formatted.toLowerCase()){
+          if (data.start.toLowerCase() <= formatted.toLowerCase() && data.stop.toLowerCase() >= formatted.toLowerCase()) {
             return fetchClaimFile(data.file);
           }
         };
@@ -75,9 +75,8 @@ function fetchClaim(account: string): Promise<UserClaimData> {
 // null means we know it does not
 export function useUserClaimData(): { [account: string]: UserClaimData } {
   const { chainId, account } = useActiveWeb3React()
-
   const [claimInfo, setClaimInfo] = useState<{ [account: string]: UserClaimData }>({})
-  
+
   useEffect(() => {
     if (!account || (chainId !== 56 && chainId !== 97 && chainId !== 1337)) {
       setClaimInfo({})
@@ -110,14 +109,15 @@ export function useUserHasAvailableClaim(): any {
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
   useEffect(() => {
-  if(userClaimData && account && userClaimData[account]){
-    distributorContracts?.isClaimed(account).then(
-      (result) => {
-        setClaimInfo(!result)
-      }
-    );
+    if (userClaimData && account && userClaimData[account]) {
+      distributorContracts?.isClaimed(account).then(
+        (result) => {
+          setClaimInfo(!result)
+        }
+      );
 
-  }}, [userClaimData, distributorContracts, account]
+    }
+  }, [userClaimData, distributorContracts, account]
   )
   // user is in blob and contract marks as unclaimed
   return claimData;
@@ -131,14 +131,13 @@ export function useUserUnclaimedAmount(): BigNumber {
   const [claimAmount, setClaimAmount] = useState<BigNumber>(BigNumber.from("0"))
 
   const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
-  useEffect(() =>{
-  if(userClaimData && account && userClaimData[account] && userClaimData[account].amount){
-    distributorContracts?.getBalance(userClaimData[account].amount).then((result) =>{
-      setClaimAmount(BigNumber.from(result))
+  useEffect(() => {
+    if (userClaimData && account && userClaimData[account] && userClaimData[account].amount) {
+      distributorContracts?.getBalance(userClaimData[account].amount).then((result) => {
+        setClaimAmount(BigNumber.from(result))
+      })
     }
-    )
-
-  }}, [userClaimData, distributorContracts]
+  }, [userClaimData, distributorContracts]
   )
   // user is in blob and contract marks as unclaimed
   return claimAmount;
@@ -160,11 +159,11 @@ export function useClaimCallback(): {
 
     const args = [claimData[account].index, account, claimData[account].amount, claimData[account].proof] as const
 
-      return distributorContract
-        .claim(...args)
-        .then((response) => {
-          return response.hash
-        })
+    return distributorContract
+      .claim(...args)
+      .then((response) => {
+        return response.hash
+      })
   }
 
   return { claimCallback }
