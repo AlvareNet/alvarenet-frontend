@@ -1,6 +1,7 @@
 import { Button, Box, Grid, Typography, CircularProgress, Zoom } from "@material-ui/core"
 import { useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
+import ANET from "../../assets/images/ANET.png"
 import NumberFormat from 'react-number-format';
 import { useWeb3React } from "@web3-react/core"
 import { useTranslation } from 'react-i18next';
@@ -45,12 +46,12 @@ export default function Claim() {
           <Grid item md={12} xs={12}>
             <Grid container justifyContent="space-around">
               <Grid item md={12} sx={{
-                backgroundImage: `url(${AlvareNet_Logo})`,
+                backgroundImage: `url(${ANET})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
-                width: '200px',
-                height: '200px'
+                width: '600px',
+                height: '300px'
               }}>
               </Grid>
             </Grid>
@@ -59,7 +60,6 @@ export default function Claim() {
             <Grid container justifyContent="center">
               <NumberFormat
                 displayType="text"
-                className="foo"
                 value={amount.toString()}
                 thousandSeparator={true}
                 suffix={t('claim.suffix')}
