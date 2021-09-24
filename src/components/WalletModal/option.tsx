@@ -45,10 +45,18 @@ export default function Option({
   const content = (
     <Card sx={{
       maxWidth: 340,
-      
-      boxShadow: 0
+      position: 'relative',
+      left: '50%',
+      transform: 'translate(-50%,0)',
+      boxShadow: 0,
+      marginBottom: '10px',
+      padding: '10px',
+      borderRadius: '10px',
+      background: ((theme) => theme.palette.mode === "light" ? "#E5E5E5": "")
     }} >
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={onClick}  sx={{
+        
+      }}>
         <CardContent sx={{
             background: `url(${Hexagon})`,
             backgroundSize: 'contain',

@@ -10,6 +10,10 @@ export const themeOptionsLight: Theme = createTheme( {
       main: "#0F73B7",
     }
   },
+  typography: {
+    fontFamily: ['"Roboto','"Black Ops One"','"Open Sans'].join(',')
+  },
+  
 });
 
 export const themeOptionsDark: Theme = createTheme( {
@@ -21,5 +25,8 @@ export const themeOptionsDark: Theme = createTheme( {
     primary: {
       main: "#0F73B7",
     }
-  }
+  },
+  typography: {
+    fontFamily: ['"Roboto','"Black Ops One"','"Open Sans'].join(',')
+  },
 });

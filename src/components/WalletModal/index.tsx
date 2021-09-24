@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function WalletModal() {
   const { t } = useTranslation();
-  const { active, account, connector, activate, deactivate ,error } = useWeb3React()
+  const { active, account, connector, activate, deactivate, error } = useWeb3React()
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -137,13 +137,17 @@ export default function WalletModal() {
       </Button>
 
       <Dialog open={show} onClose={handleClose} sx={{
-        background: "rgba(0,0,0,0.5)"
+        background: "rgba(0,0,0,0.5)",
+        ['.MuiDialog-paper']: {
+          width: '85%',
+          borderRadius: '10px',
+        }
       }}>
-        <DialogTitle sx={{ textAlign: "center" }}>
-          {t("walletConnect.selectWallet")}
-        </DialogTitle>
-        <DialogContent>{getOptions()}</DialogContent>
-      </Dialog>
+      <DialogTitle sx={{ textAlign: "center",fontFamily: "Black Ops One" }}>
+        {t("walletConnect.selectWallet")}
+      </DialogTitle>
+      <DialogContent>{getOptions()}</DialogContent>
+    </Dialog>
     </>
   );
 }
