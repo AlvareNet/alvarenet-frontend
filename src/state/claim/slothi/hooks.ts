@@ -227,7 +227,7 @@ export function useApproveCallback(): {
   const slthContract = useERC20Contract(SLOTHI)
   const samaContract = useERC20Contract(SAMARI)
   const  SlthApproveCallback = async function () {
-    if (!account ||!available.slth || !library || !chainId || !slthContract || !approved.slth) return null
+    if (!account ||!available.slth || !library || !chainId || !slthContract || approved.slth) return null
 
 
     const args = [SLOTHI_MERKLE_DISTRIBUTER[chainId], ethers.constants.MaxUint256] as const
@@ -238,7 +238,7 @@ export function useApproveCallback(): {
       })
   }
   const  SamaApproveCallback = async function () {
-    if (!account ||!available.sama || !library || !chainId || !samaContract || !approved.sama) return null
+    if (!account ||!available.sama || !library || !chainId || !samaContract || approved.sama) return null
 
     const args = [SLOTHI_MERKLE_DISTRIBUTER[chainId], ethers.constants.MaxUint256] as const
     return samaContract

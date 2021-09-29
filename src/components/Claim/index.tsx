@@ -24,7 +24,7 @@ export default function Claim() {
   }
 
   function slthClaim() {
-    SlthClaimCallback().then((result) => result?.wait(1).then((result) => console.log(result)))
+    SlthClaimCallback().then((result) => console.log(result))
       // reset modal and log error
       .catch((error) => {
         console.log(error)
@@ -48,8 +48,8 @@ export default function Claim() {
   }
   else if (available.slth && active) {
     let button;
-    if(approved){
-      button =<Button onClick={slthClaim} variant="contained">{t('claim.approve')}</Button>
+    if(approved.slth){
+      button =<Button onClick={slthClaim} variant="contained">{t('claim.now')}</Button>
     }
     else{
       button = <Button onClick={slthApprove} variant="contained">{t('claim.approve')}</Button>
@@ -82,7 +82,7 @@ export default function Claim() {
               />
             </Grid>
             <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
-              {button}
+            {button}
             </Grid>
           </Grid>
         </Grid>
