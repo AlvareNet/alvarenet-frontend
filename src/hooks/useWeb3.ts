@@ -3,8 +3,10 @@ import { useWeb3React } from '@web3-react/core'
 
 import { injected } from '../connectors'
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
-import { Web3Provider } from '@ethersproject/providers'
+import { Listener, Web3Provider } from '@ethersproject/providers'
 import { NetworkContextName } from '../constants/misc'
+import { listeners } from 'process'
+import { EventFilter, Filter } from '@ethersproject/abstract-provider'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
   const context = useWeb3React<Web3Provider>()
@@ -12,6 +14,42 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
   return context.active ? context : contextNetwork
 }
 
+function useBlockNumber() : number {
+  const { chainId, library } = useWeb3React()
+
+  const [blockNumber, setBlockNumber] = useState<number>(0)
+  useEffect((): any => {
+    if (!!library) {
+      let stale = false
+
+      library
+        .getBlockNumber()
+        .then((blockNumber: number) => {
+          if (!stale) {
+            setBlockNumber(blockNumber)
+          }
+        })
+        .catch(() => {
+          if (!stale) {
+            setBlockNumber(0)
+          }
+        })
+
+      const updateBlockNumber = (blockNumber: number) => {
+        setBlockNumber(blockNumber)
+      }
+      library.on('block', updateBlockNumber)
+
+      return () => {
+        stale = true
+        library.removeListener('block', updateBlockNumber)
+        setBlockNumber(0)
+      }
+    }
+  }, [library, chainId]) // ensures refresh if referential identity of library doesn't change across chainIds
+
+  return blockNumber
+}
 export function useEagerConnect() {
     const { activate, active } = useWeb3React()
     const [tried, setTried] = useState(false)
