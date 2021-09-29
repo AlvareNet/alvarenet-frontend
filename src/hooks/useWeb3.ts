@@ -3,10 +3,8 @@ import { useWeb3React } from '@web3-react/core'
 
 import { injected } from '../connectors'
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
-import { Listener, Web3Provider } from '@ethersproject/providers'
+import { Web3Provider } from '@ethersproject/providers'
 import { NetworkContextName } from '../constants/misc'
-import { listeners } from 'process'
-import { EventFilter, Filter } from '@ethersproject/abstract-provider'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
   const context = useWeb3React<Web3Provider>()
@@ -14,7 +12,7 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
   return context.active ? context : contextNetwork
 }
 
-function useBlockNumber() : number {
+export function useBlockNumber() : number {
   const { chainId, library } = useWeb3React()
 
   const [blockNumber, setBlockNumber] = useState<number>(0)

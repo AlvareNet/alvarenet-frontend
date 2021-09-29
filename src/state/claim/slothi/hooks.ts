@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { isAddress, getAddress } from "@ethersproject/address"
-import { useActiveWeb3React } from '../../../hooks/useWeb3'
+import { useActiveWeb3React, useBlockNumber } from '../../../hooks/useWeb3'
 import { CHUNKURLPREFIX, CLAIMMAPPINGURL, SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../../constants/contracts"
-import { useMerkleDistributorContract } from "../../../hooks/useContract"
-import { BigNumber } from "ethers"
+import { useERC20Contract, useMerkleDistributorContract } from "../../../hooks/useContract"
+import { BigNumber, ContractTransaction, ethers } from "ethers"
 
 interface UserClaims {
   Slothi? : UserClaimData
@@ -70,10 +70,10 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
         if (result[formattedAddress]){
           var data : UserClaims = {}
           result[formattedAddress].forEach(element => {
-            if(element.contract.toLowerCase() == SLOTHI[chainId].toLowerCase()){
+            if(element.contract.toLowerCase() === SLOTHI[chainId].toLowerCase()){
               data.Slothi = element;
             }
-            else if(element.contract.toLowerCase() == SAMARI[chainId].toLowerCase()){
+            else if(element.contract.toLowerCase() === SAMARI[chainId].toLowerCase()){
               data.Samari = element;
             }
           });
@@ -121,29 +121,30 @@ export function useUserClaimData(): { [account: string]: UserClaims } {
 export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
   const userClaimData = useUserClaimData()
   const { account, chainId } = useActiveWeb3React()
-  
+  const blocknumber = useBlockNumber()
+
   const [slothiClaim, setSetSlothiClaimInfo] = useState<boolean>(false)
   const [samariClaim, setSetSamariClaimInfo] = useState<boolean>(false)
 
-  const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
+  const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
   useEffect(() => {
     if (userClaimData && account && userClaimData[account] && chainId) {
       if(userClaimData[account].Slothi){
-        distributorContracts?.isClaimedSlothi(account).then(
+        distributorContract?.isClaimedSlothi(account).then(
           (result) => {
             setSetSlothiClaimInfo(!result)
           }
         ); 
       }
       else if(userClaimData[account].Samari){
-        distributorContracts?.isClaimedSamari(account).then(
+        distributorContract?.isClaimedSamari(account).then(
           (result) => {
             setSetSamariClaimInfo(!result)
           }
         ); 
       }
     }
-  }, [userClaimData, distributorContracts, account, chainId]
+  }, [userClaimData, distributorContract, account, chainId, blocknumber]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : slothiClaim, sama: samariClaim};
@@ -168,53 +169,127 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
       }
       else if(element.Samari){
         distributorContracts?.getBalanceSamari(element.Samari.amount).then((result) => {
-          setSlothiClaimAmount(BigNumber.from(result))
+          setSamariClaimAmount(BigNumber.from(result))
         })
       }
     }
-  }, [userClaimData, distributorContracts, chainId]
+  }, [userClaimData, distributorContracts, chainId, account]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : SlothiClaimAmount, sama: SamariClaimAmount};
 }
 
+export function useApproved(): {slth: boolean, sama: boolean} {
+  const userClaimData = useUserClaimData();
+  const claimAvailable = useUserHasAvailableClaim();
+  const { account, chainId} = useActiveWeb3React();
+  const blocknumber = useBlockNumber();
+
+  const [SlothiApproved, setSlothiApproved] = useState<boolean>(false)
+  const [SamariApproved, setSamariApproved] = useState<boolean>(false)
+
+  const slothiContract = useERC20Contract(SLOTHI)
+  const samariContract = useERC20Contract(SAMARI)
+  useEffect(() => {
+    if (userClaimData && account && userClaimData[account] && chainId) {
+      var element = userClaimData[account]
+      if(element.Slothi?.amount && claimAvailable.slth && !SlothiApproved){
+        let amount = element.Slothi.amount
+        slothiContract?.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
+          if(result.gte(amount)){
+            setSlothiApproved(true);
+          }
+        }) 
+      }
+      else if(element.Samari?.amount && claimAvailable.sama && !SamariApproved){
+        let amount = element.Samari.amount
+        samariContract?.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
+          if(result.gte(amount)){
+            setSamariApproved(true);
+          }
+        })
+       
+    }
+  }}, [userClaimData, samariContract, slothiContract, chainId, account, blocknumber, claimAvailable.sama, claimAvailable.slth, SamariApproved, SlothiApproved]
+  )
+  // user is in blob and contract marks as unclaimed
+  return {slth : SlothiApproved, sama: SamariApproved};
+}
+
+export function useApproveCallback(): {
+  SlthApproveCallback: () => Promise<ContractTransaction | null>,
+  SamaApproveCallback: () => Promise<ContractTransaction | null>
+}{
+  const { library, chainId, account } = useActiveWeb3React()
+  const available = useUserHasAvailableClaim()
+  const approved = useApproved()
+
+  const slthContract = useERC20Contract(SLOTHI)
+  const samaContract = useERC20Contract(SAMARI)
+  const  SlthApproveCallback = async function () {
+    if (!account ||!available.slth || !library || !chainId || !slthContract || !approved.slth) return null
+
+
+    const args = [SLOTHI_MERKLE_DISTRIBUTER[chainId], ethers.constants.MaxUint256] as const
+    return slthContract
+      .approve(...args)
+      .then((response) => {
+        return response
+      })
+  }
+  const  SamaApproveCallback = async function () {
+    if (!account ||!available.sama || !library || !chainId || !samaContract || !approved.sama) return null
+
+    const args = [SLOTHI_MERKLE_DISTRIBUTER[chainId], ethers.constants.MaxUint256] as const
+    return samaContract
+      .approve(...args)
+      .then((response) => {
+        return response
+      })
+  }
+
+  return { SlthApproveCallback, SamaApproveCallback}
+
+}
+
 export function useClaimCallback(): {
-  SlthClaimCallback: () => Promise<string>,
-  SamaClaimCallback: () => Promise<string>
+  SlthClaimCallback: () => Promise<ContractTransaction| null>,
+  SamaClaimCallback: () => Promise<ContractTransaction| null>
 } {
   // get claim data for this account
   const { library, chainId, account } = useActiveWeb3React()
   const claimData = useUserClaimData()
   const available = useUserHasAvailableClaim()
+  const approved = useApproved()
 
   // used for popup summary
   const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
 
   const SlthClaimCallback = async function () {
 
-    if (!claimData || !account || !claimData[account] || !available.slth || !library || !chainId || !distributorContract) return ""
+    if (!claimData || !account || !claimData[account] || !available.slth || !library || !chainId || !distributorContract || !approved.slth) return null
     var element = claimData[account]
-    if (!element.Slothi) return ""
+    if (!element.Slothi) return null
     const args = [element.Slothi.index, account, element.Slothi.amount, element.Slothi.contract ,element.Slothi.proof] as const
-    distributorContract.interface
+
     return distributorContract
       .claim(...args)
       .then((response) => {
-        return response.hash
+        return response
       })
   }
 
   const SamaClaimCallback = async function () {
 
-    if (!claimData || !account || !claimData[account] || !available.sama || !library || !chainId || !distributorContract) return ""
+    if (!claimData || !account || !claimData[account] || !available.sama || !library || !chainId || !distributorContract || !approved.sama) return null
     var element = claimData[account]
-    if (!element.Samari) return ""
+    if (!element.Samari) return null
     const args = [element.Samari.index, account, element.Samari.amount, element.Samari.contract ,element.Samari.proof] as const
 
     return distributorContract
       .claim(...args)
       .then((response) => {
-        return response.hash
+        return response
       })
   }
 

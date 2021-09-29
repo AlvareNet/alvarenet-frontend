@@ -1,5 +1,5 @@
 import { Button, Box, Grid, Typography, CircularProgress, Zoom } from "@material-ui/core"
-import { useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
+import { useApproveCallback, useApproved, useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 import ANET from "../../assets/images/ANET.png"
 import NumberFormat from 'react-number-format';
@@ -10,12 +10,21 @@ export default function Claim() {
   const { t } = useTranslation();
   const number = useUserUnclaimedAmount()
   const available = useUserHasAvailableClaim()
-  const { claimCallback } = useClaimCallback()
-  const amount = number.div(1000000000).toString()
+  const approved = useApproved()
+  const { SlthClaimCallback, SamaClaimCallback } = useClaimCallback()
+  const { SlthApproveCallback, SamaApproveCallback} = useApproveCallback()
   const { active } = useWeb3React()
 
-  function onClaim() {
-    claimCallback().then((result) => console.log(result))
+  function slthApprove() {
+    SlthApproveCallback().then((result) => result?.wait(1).then((result) => console.log(result)))
+      // reset modal and log error
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  function slthClaim() {
+    SlthClaimCallback().then((result) => result?.wait(1).then((result) => console.log(result)))
       // reset modal and log error
       .catch((error) => {
         console.log(error)
@@ -37,7 +46,14 @@ export default function Claim() {
       </Zoom>
     )
   }
-  else if (available && active) {
+  else if (available.slth && active) {
+    let button;
+    if(approved){
+      button =<Button onClick={slthClaim} variant="contained">{t('claim.approve')}</Button>
+    }
+    else{
+      button = <Button onClick={slthApprove} variant="contained">{t('claim.approve')}</Button>
+    }
     return (
       <Zoom in={true} timeout={250}>
         <Grid container justifyContent="center" boxShadow={2} sx={{
@@ -60,15 +76,13 @@ export default function Claim() {
             <Grid container justifyContent="center">
               <NumberFormat
                 displayType="text"
-                value={amount.toString()}
+                value={number.slth.div(1000000000).toString()}
                 thousandSeparator={true}
                 suffix={t('claim.suffix')}
               />
             </Grid>
             <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
-              <Button onClick={onClaim} variant="contained">
-                {t('claim.now')}
-              </Button>
+              {button}
             </Grid>
           </Grid>
         </Grid>
