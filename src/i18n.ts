@@ -41,6 +41,7 @@ i18n
           claim: {
             suffix: " ANET available",
             now: "Claim Now",
+            approve: "Approve",
             connectWallet: "Please connect your wallet"
           }
         }
@@ -69,6 +70,7 @@ i18n
           claim: {
             suffix: " ANET verfügbar",
             now: "Jetzt claimen",
+            approve: "Approve",
             connectWallet: "Bitte verbinde deine Wallet"
           }
         }
