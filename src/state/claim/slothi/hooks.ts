@@ -196,7 +196,7 @@ export function useClaimCallback(): {
     var element = claimData[account]
     if (!element.Slothi) return ""
     const args = [element.Slothi.index, account, element.Slothi.amount, element.Slothi.contract ,element.Slothi.proof] as const
-
+    distributorContract.interface
     return distributorContract
       .claim(...args)
       .then((response) => {
