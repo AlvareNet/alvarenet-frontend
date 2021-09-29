@@ -20,12 +20,12 @@ export const SAMARI: AddressMap = {
     [SupportedChainId.LOCALHOST] : '0xa600208eE2E0aD1b7A1f9E04e634b6B93fB1bE7e'
 }
 
-export const CLAIMMAPPINGURL = {
+export const CLAIMMAPPINGURL: { TESTNET: string, MAINNET: string } = {
     TESTNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/testnet/output/mappings.json',
-    MAINNET : '0x0540EA525eA4E38Ed629F706F2724BaFf86eA47b',
+    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/testnet/Dualcontract/mappings.json',
 }
 
-export const CHUNKURL = {
-    TESTNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/main/output/',
-    MAINNET : '0x0540EA525eA4E38Ed629F706F2724BaFf86eA47b',
+export const CHUNKURLPREFIX: { TESTNET: string, MAINNET: string } = {
+    TESTNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/testnet/output/',
+    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/Dualcontract/output/',
 }

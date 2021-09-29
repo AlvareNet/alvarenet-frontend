@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { isAddress, getAddress } from "@ethersproject/address"
 import { useActiveWeb3React } from '../../../hooks/useWeb3'
-import { SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../../constants/contracts"
+import { CHUNKURLPREFIX, CLAIMMAPPINGURL, SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../../constants/contracts"
 import { useMerkleDistributorContract } from "../../../hooks/useContract"
 import { BigNumber } from "ethers"
 
@@ -23,7 +23,7 @@ function fetchClaimMapping(): Promise<ClaimAddressMapping[]> {
   return (
     FETCH_CLAIM_MAPPING_PROMISE ??
     (FETCH_CLAIM_MAPPING_PROMISE = fetch(
-      `https://raw.githubusercontent.com/AlvareNet/AirdropData/main/output/slothi/mappings.json`
+      CLAIMMAPPINGURL.TESTNET
     )
       .then((res) => res.json())
       .catch((error) => {
@@ -38,7 +38,7 @@ function fetchClaimFile(key: string): Promise<{ [address: string]: UserClaimData
   return (
     FETCH_CLAIM_FILE_PROMISE ??
     (FETCH_CLAIM_FILE_PROMISE = fetch(
-      `https://raw.githubusercontent.com/AlvareNet/AirdropData/main/output/slothi/${key}`
+      CHUNKURLPREFIX.TESTNET + key
     )
       .then((res) => res.json())
       .catch((error) => {
