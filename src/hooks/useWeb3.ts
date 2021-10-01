@@ -56,9 +56,9 @@ export function useEagerConnect() {
         injected.isAuthorized().then((isAuthorized: boolean) => {
           if (isAuthorized) {
             setTried(true)
-            //activate(injected, undefined, true).catch(() => {
-            //  setTried(true)
-            //})
+            activate(injected, undefined, true).catch(() => {
+             setTried(true)
+            })
           } else {
             setTried(true)
           }
@@ -93,7 +93,9 @@ export function useInactiveListener(suppress: boolean = false) {
         const handleAccountsChanged = (accounts: string[]) => {
           console.log("Handling 'accountsChanged' event with payload", accounts)
           if (accounts.length > 0) {
-            activate(injected)
+            activate(injected, undefined, true).catch((error) => {
+              console.error('Failed to activate after accounts changed', error)
+            })
           }
         }
         const handleNetworkChanged = (networkId: string | number) => {

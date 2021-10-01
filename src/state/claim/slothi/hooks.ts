@@ -136,12 +136,18 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
           }
         ); 
       }
-      else if(userClaimData[account].Samari){
+      else{
+        setSetSlothiClaimInfo(false)
+      }
+      if(userClaimData[account].Samari){
         distributorContract?.isClaimedSamari(account).then(
           (result) => {
             setSetSamariClaimInfo(!result)
           }
         ); 
+      }
+      else{
+        setSetSamariClaimInfo(false)
       }
     }
   }, [userClaimData, distributorContract, account, chainId, blocknumber]
@@ -167,10 +173,16 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
           setSlothiClaimAmount(BigNumber.from(result))
         }) 
       }
-      else if(element.Samari){
+      else{
+        setSlothiClaimAmount(BigNumber.from("0"))
+      }
+      if(element.Samari){
         distributorContracts?.getBalanceSamari(element.Samari.amount).then((result) => {
           setSamariClaimAmount(BigNumber.from(result))
         })
+      }
+      else{
+        setSamariClaimAmount(BigNumber.from("0"))
       }
     }
   }, [userClaimData, distributorContracts, chainId, account]
@@ -185,6 +197,7 @@ export function useApproved(): {slth: boolean, sama: boolean} {
   const { account, chainId} = useActiveWeb3React();
   const blocknumber = useBlockNumber();
 
+  const [oldAccount, setCurrentAccount] = useState<string>();
   const [SlothiApproved, setSlothiApproved] = useState<boolean>(false)
   const [SamariApproved, setSamariApproved] = useState<boolean>(false)
 
@@ -192,25 +205,39 @@ export function useApproved(): {slth: boolean, sama: boolean} {
   const samariContract = useERC20Contract(SAMARI)
   useEffect(() => {
     if (userClaimData && account && userClaimData[account] && chainId) {
+      if(oldAccount != account){
+        setSlothiApproved(false);
+        setSamariApproved(false);
+        setCurrentAccount(account);
+      }
       var element = userClaimData[account]
       if(element.Slothi?.amount && claimAvailable.slth && !SlothiApproved){
         let amount = element.Slothi.amount
+        let success = false
         slothiContract?.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
           if(result.gte(amount)){
-            setSlothiApproved(true);
+            success = true;
           }
         }) 
+        setSlothiApproved(success)
       }
-      else if(element.Samari?.amount && claimAvailable.sama && !SamariApproved){
+      if(element.Samari?.amount && claimAvailable.sama && !SamariApproved){
         let amount = element.Samari.amount
+        let success = false
         samariContract?.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
           if(result.gte(amount)){
-            setSamariApproved(true);
+            success = true
           }
         })
+        setSamariApproved(success)
        
     }
-  }}, [userClaimData, samariContract, slothiContract, chainId, account, blocknumber, claimAvailable.sama, claimAvailable.slth, SamariApproved, SlothiApproved]
+  }
+  else{
+    setSlothiApproved(false);
+    setSamariApproved(false);
+  }
+}, [userClaimData, samariContract, slothiContract, chainId, account, blocknumber, claimAvailable.sama, claimAvailable.slth, SamariApproved, SlothiApproved]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : SlothiApproved, sama: SamariApproved};
