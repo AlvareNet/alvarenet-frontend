@@ -48,7 +48,7 @@ function fetchClaimFile(key: string): Promise<{ [address: string]: UserClaimData
   )
 }
 
-const FETCH_CLAIM_PROMISES: { [key: string]: Promise<UserClaims> } = {}
+const FETCH_CLAIM_PROMISES: { [key: string]: { [chain: number]: Promise<UserClaims> } } = {}
 // returns the claim for the given address, or null if not valid
 function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
   if (!isAddress(account)) {
@@ -56,9 +56,11 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
   }
   const formattedAddress = getAddress(account).toLowerCase()
 
+  FETCH_CLAIM_PROMISES[account] ?? (FETCH_CLAIM_PROMISES[account] = {})
+
   return (
-    FETCH_CLAIM_PROMISES[account] ??
-    (FETCH_CLAIM_PROMISES[account] = fetchClaimMapping()
+    FETCH_CLAIM_PROMISES[account][chainId] ??
+    (FETCH_CLAIM_PROMISES[account][chainId]  = fetchClaimMapping()
       .then((mapping) => {
         for (const data of mapping) {
           if (data.start.toLowerCase() <= formattedAddress.toLowerCase() && data.stop.toLowerCase() >= formattedAddress.toLowerCase()) {
@@ -92,9 +94,9 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
 
 // parse distributorContract blob and detect if user has claim data
 // null means we know it does not
-export function useUserClaimData(): { [account: string]: UserClaims } {
+export function useUserClaimData(): UserClaims {
   const { chainId, account } = useActiveWeb3React()
-  const [claimInfo, setClaimInfo] = useState<{ [account: string]: UserClaims }>({})
+  const [claimInfo, setClaimInfo] = useState<UserClaims>({})
 
   useEffect(() => {
     if (!account || (chainId !== 56 && chainId !== 97 && chainId !== 1337)) {
@@ -103,14 +105,7 @@ export function useUserClaimData(): { [account: string]: UserClaims } {
     }
 
     fetchClaim(account, chainId)
-      .then((accountClaimInfo) =>
-        setClaimInfo((claimInfo) => {
-          return {
-            ...claimInfo,
-            [account]: accountClaimInfo,
-          }
-        })
-      )
+      .then(setClaimInfo)
       .catch(() => {
         setClaimInfo({})
       })
@@ -136,15 +131,15 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
   }, [account])
 
   useEffect(() => {
-    if (userClaimData && account && userClaimData[account] && chainId && distributorContract) {
-      if(userClaimData[account].Slothi){
+    if (userClaimData && account && chainId && distributorContract) {
+      if(userClaimData.Slothi){
         distributorContract.isClaimedSlothi(account).then(
           (result) => {
             setSetSlothiClaimInfo(!result)
           }
         ); 
       }
-      if(userClaimData[account].Samari){
+      if(userClaimData.Samari){
         distributorContract.isClaimedSamari(account).then(
           (result) => {
             setSetSamariClaimInfo(!result)
@@ -178,18 +173,17 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
   }, [account])
 
   useEffect(() => {
-    if (userClaimData && account && userClaimData[account] && chainId && distributorContract) {
-      var element = userClaimData[account]
-      if(element.Slothi){
-        distributorContract.getBalance(element.Slothi.amount).then((result) => {
+    if (userClaimData && account && chainId && distributorContract) {
+      if(userClaimData.Slothi){
+        distributorContract.getBalance(userClaimData.Slothi.amount).then((result) => {
           setSlothiClaimAmount(BigNumber.from(result))
         }) 
       }
       else{
         setSlothiClaimAmount(BigNumber.from("0"))
       }
-      if(element.Samari){
-        distributorContract.getBalanceSamari(element.Samari.amount).then((result) => {
+      if(userClaimData.Samari){
+        distributorContract.getBalanceSamari(userClaimData.Samari.amount).then((result) => {
           setSamariClaimAmount(BigNumber.from(result))
         })
       }
@@ -225,11 +219,10 @@ export function useApproved(): {slth: boolean, sama: boolean} {
   }, [account])
 
   useEffect(() => {
-    if (userClaimData && account && userClaimData[account] && chainId) {
-      var element = userClaimData[account]
+    if (userClaimData && account && chainId) {
       if(slothiContract){
-        if(element.Slothi?.amount && claimAvailable.slth && !SlothiApproved){
-          let amount = element.Slothi.amount
+        if(userClaimData.Slothi?.amount && claimAvailable.slth && !SlothiApproved){
+          let amount = userClaimData.Slothi.amount
           slothiContract.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
             let success = false;
             if(result.gte(amount)){
@@ -244,8 +237,8 @@ export function useApproved(): {slth: boolean, sama: boolean} {
       }
 
       if(samariContract){
-        if(element.Samari?.amount && claimAvailable.sama && !SamariApproved){
-          let amount = element.Samari.amount
+        if(userClaimData.Samari?.amount && claimAvailable.sama && !SamariApproved){
+          let amount = userClaimData.Samari.amount
           let success = false
           samariContract.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
             if(result.gte(amount)){
@@ -321,10 +314,9 @@ export function useClaimCallback(): {
 
   const SlthClaimCallback = async function () {
 
-    if (!claimData || !account || !claimData[account] || !available.slth || !library || !chainId || !distributorContract || !approved.slth) return null
-    var element = claimData[account]
-    if (!element.Slothi) return null
-    const args = [element.Slothi.index, account, element.Slothi.amount, element.Slothi.contract ,element.Slothi.proof] as const
+    if (!claimData || !account || !available.slth || !library || !chainId || !distributorContract || !approved.slth) return null
+    if (!claimData.Slothi) return null
+    const args = [claimData.Slothi.index, account, claimData.Slothi.amount, claimData.Slothi.contract ,claimData.Slothi.proof] as const
 
     return distributorContract
       .claim(...args)
@@ -335,10 +327,9 @@ export function useClaimCallback(): {
 
   const SamaClaimCallback = async function () {
 
-    if (!claimData || !account || !claimData[account] || !available.sama || !library || !chainId || !distributorContract || !approved.sama) return null
-    var element = claimData[account]
-    if (!element.Samari) return null
-    const args = [element.Samari.index, account, element.Samari.amount, element.Samari.contract ,element.Samari.proof] as const
+    if (!claimData || !account || !available.sama || !library || !chainId || !distributorContract || !approved.sama) return null
+    if (!claimData.Samari) return null
+    const args = [claimData.Samari.index, account, claimData.Samari.amount, claimData.Samari.contract ,claimData.Samari.proof] as const
 
     return distributorContract
       .claim(...args)
