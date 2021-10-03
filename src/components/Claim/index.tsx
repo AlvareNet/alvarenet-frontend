@@ -1,5 +1,6 @@
 import { Button, Grid, Typography, CircularProgress, Zoom } from "@material-ui/core"
-import { useApproveCallback, useApproved, useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
+import { useApproveCallback, useApproved, useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/hooks"
+import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 import ANET from "../../assets/images/ANET.png"
 import NumberFormat from 'react-number-format';
 import { useTranslation } from 'react-i18next';
@@ -122,9 +123,26 @@ export default function Claim() {
           }
         </>
           :
+          <>
+        <Grid item md={12} xs={12}>
+          <Grid container justifyContent="space-around">
+            <Grid item md={12} sx={{
+              backgroundImage: `url(${AlvareNet_Logo})`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              width: '200px',
+              height: '200px'
+            }}>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item md={12} xs={12}>
           <Grid container justifyContent="center">
             <Typography variant="h5">{t('claim.connectWallet')}</Typography>
           </Grid>
+          </Grid>
+          </>
         }
       </Grid>
     </Zoom>

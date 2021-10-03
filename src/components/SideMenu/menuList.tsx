@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Typography, Button, Grid } from "@material-ui/core"
 import { Home, SwapHoriz } from "@material-ui/icons"
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 export default function MenuList(props: any) {
     const { t, i18n } = useTranslation();

@@ -1,10 +1,9 @@
-import { Box, Drawer, Button, Typography } from "@material-ui/core";
-import { Home, SwapHoriz } from "@material-ui/icons";
+import { Drawer } from "@material-ui/core";
 import MenuList from "./menuList"
-import { useWeb3React } from "@web3-react/core"
+//import { useActiveWeb3React } from "../../hooks/useWeb3";
 
 export default function SideMenu(props: any) {
-    const { active } = useWeb3React()
+    //const { active } = useActiveWeb3React()
 
     return (
         <>

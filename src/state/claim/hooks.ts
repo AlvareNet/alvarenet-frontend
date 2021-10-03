@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { isAddress, getAddress } from "@ethersproject/address"
-import { useActiveWeb3React, useBlockNumber } from '../../../hooks/useWeb3'
-import { CHUNKURLPREFIX, CLAIMMAPPINGURL, SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../../constants/contracts"
-import { useERC20Contract, useMerkleDistributorContract } from "../../../hooks/useContract"
+import { useActiveWeb3React, useBlockNumber } from '../../hooks/useWeb3'
+import { CHUNKURLPREFIX, CLAIMMAPPINGURL, SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../constants/contracts"
+import { useERC20Contract, useMerkleDistributorContract } from "../../hooks/useContract"
 import { BigNumber, ContractTransaction, ethers } from "ethers"
 
 interface UserClaims {
@@ -86,7 +86,7 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
         throw new Error(`Claim for ${formattedAddress} was not found in claim file!`)
       })
       .catch((error) => {
-        console.debug('Claim fetch failed', error)
+        console.log('Claim fetch failed', error)
         throw error
       }))
   )
@@ -96,22 +96,33 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
 // null means we know it does not
 export function useUserClaimData(): UserClaims {
   const { chainId, account } = useActiveWeb3React()
-  const [claimInfo, setClaimInfo] = useState<UserClaims>({})
+  const [claimInfo, setClaimInfo] = useState<{[account: string] : UserClaims }>({})
 
   useEffect(() => {
     if (!account || (chainId !== 56 && chainId !== 97 && chainId !== 1337)) {
-      setClaimInfo({})
       return
     }
 
     fetchClaim(account, chainId)
-      .then(setClaimInfo)
+      .then(result => {
+        setClaimInfo((prev) => {
+          return {
+            ...prev,
+            [account]: result,
+          }
+        })
+      })
       .catch(() => {
-        setClaimInfo({})
+        setClaimInfo((prev) => {
+          return {
+            ...prev,
+            [account]: {},
+          }
+        })
       })
   }, [account, chainId])
 
-  return claimInfo
+  return account && chainId && claimInfo[account] ? claimInfo[account] : {}
 }
 
 // check if user is in blob and has not yet claimed UNI
@@ -128,13 +139,16 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
   useEffect(() => {
     setSetSamariClaimInfo(false);
     setSetSlothiClaimInfo(false);
-  }, [account])
+    console.log("Reset")
+  }, [account, chainId])
 
   useEffect(() => {
     if (userClaimData && account && chainId && distributorContract) {
       if(userClaimData.Slothi){
         distributorContract.isClaimedSlothi(account).then(
           (result) => {
+            console.log("Set")
+            console.log( account + userClaimData.Slothi?.amount.toString())
             setSetSlothiClaimInfo(!result)
           }
         ); 
@@ -151,7 +165,8 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
       setSetSamariClaimInfo(false)
       setSetSlothiClaimInfo(false)
     }
-  }, [userClaimData, distributorContract, account, chainId, blocknumber]
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userClaimData, distributorContract, blocknumber]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : slothiClaim, sama: samariClaim};
@@ -170,7 +185,7 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
   useEffect(() => {
     setSamariClaimAmount(BigNumber.from("0"));
     setSlothiClaimAmount(BigNumber.from("0"));
-  }, [account])
+  }, [account, chainId])
 
   useEffect(() => {
     if (userClaimData && account && chainId && distributorContract) {
@@ -179,23 +194,18 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
           setSlothiClaimAmount(BigNumber.from(result))
         }) 
       }
-      else{
-        setSlothiClaimAmount(BigNumber.from("0"))
-      }
       if(userClaimData.Samari){
         distributorContract.getBalanceSamari(userClaimData.Samari.amount).then((result) => {
           setSamariClaimAmount(BigNumber.from(result))
         })
-      }
-      else{
-        setSamariClaimAmount(BigNumber.from("0"))
       }
     }
     else {
       setSamariClaimAmount(BigNumber.from("0"));
       setSlothiClaimAmount(BigNumber.from("0"));
     }
-  }, [userClaimData, distributorContract, chainId, account]
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userClaimData, distributorContract]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : SlothiClaimAmount, sama: SamariClaimAmount};
@@ -216,7 +226,7 @@ export function useApproved(): {slth: boolean, sama: boolean} {
   useEffect(() => {
     setSlothiApproved(false);
     setSamariApproved(false);
-  }, [account])
+  }, [account, chainId])
 
   useEffect(() => {
     if (userClaimData && account && chainId) {
@@ -257,7 +267,8 @@ export function useApproved(): {slth: boolean, sama: boolean} {
     setSlothiApproved(false);
     setSamariApproved(false);
   }
-}, [userClaimData, samariContract, slothiContract, chainId, account, blocknumber, claimAvailable.sama, claimAvailable.slth, SamariApproved, SlothiApproved]
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [userClaimData, samariContract, slothiContract, blocknumber, claimAvailable]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : SlothiApproved, sama: SamariApproved};
