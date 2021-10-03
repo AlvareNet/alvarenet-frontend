@@ -6,10 +6,9 @@ import styled from 'styled-components';
 import { ThemeProvider, CssBaseline, Fab } from "@material-ui/core"
 import Claim from "../components/Claim";
 import Home from "./Home"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { LightMode, DarkMode } from "@material-ui/icons"
 import { themeOptionsLight, themeOptionsDark } from '../theme'
-import { createTheme } from '@material-ui/core/styles';
 
 const AppWrapper = styled.div`
   display: flex;

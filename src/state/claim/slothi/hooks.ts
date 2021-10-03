@@ -33,16 +33,17 @@ function fetchClaimMapping(): Promise<ClaimAddressMapping[]> {
   )
 }
 
-let FETCH_CLAIM_FILE_PROMISE: Promise<{ [address: string]: UserClaimData[] }> | null = null
+let FETCH_CLAIM_FILE_PROMISE: { [chunk: string] :  Promise<{ [address: string]: UserClaimData[] }> } = {}
 function fetchClaimFile(key: string): Promise<{ [address: string]: UserClaimData[] }> {
   return (
-    FETCH_CLAIM_FILE_PROMISE ??
-    (FETCH_CLAIM_FILE_PROMISE = fetch(
+    FETCH_CLAIM_FILE_PROMISE[key] ??
+    (FETCH_CLAIM_FILE_PROMISE[key] = fetch(
       CHUNKURLPREFIX.TESTNET + key
     )
       .then((res) => res.json())
       .catch((error) => {
         console.error(`Failed to get claim file mapping for ${key}`, error)
+        delete FETCH_CLAIM_FILE_PROMISE[key]
       }))
   )
 }
@@ -61,11 +62,12 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
       .then((mapping) => {
         for (const data of mapping) {
           if (data.start.toLowerCase() <= formattedAddress.toLowerCase() && data.stop.toLowerCase() >= formattedAddress.toLowerCase()) {
-            return fetchClaimFile(data.file);
+            return data.file;
           }
         };
         throw new Error(`Claim for ${formattedAddress} was not found in partial search`)
       })
+      .then(fetchClaimFile)
       .then((result) => {
         if (result[formattedAddress]){
           var data : UserClaims = {}
@@ -127,27 +129,27 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
   const [samariClaim, setSetSamariClaimInfo] = useState<boolean>(false)
 
   const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
+  
   useEffect(() => {
-    if (userClaimData && account && userClaimData[account] && chainId) {
+    setSetSamariClaimInfo(false);
+    setSetSlothiClaimInfo(false);
+  }, [account])
+
+  useEffect(() => {
+    if (userClaimData && account && userClaimData[account] && chainId && distributorContract) {
       if(userClaimData[account].Slothi){
-        distributorContract?.isClaimedSlothi(account).then(
+        distributorContract.isClaimedSlothi(account).then(
           (result) => {
             setSetSlothiClaimInfo(!result)
           }
         ); 
       }
-      else{
-        setSetSlothiClaimInfo(false)
-      }
       if(userClaimData[account].Samari){
-        distributorContract?.isClaimedSamari(account).then(
+        distributorContract.isClaimedSamari(account).then(
           (result) => {
             setSetSamariClaimInfo(!result)
           }
-        ); 
-      }
-      else{
-        setSetSamariClaimInfo(false)
+        );
       }
     }
     else{
@@ -168,12 +170,18 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
   const [SlothiClaimAmount, setSlothiClaimAmount] = useState<BigNumber>(BigNumber.from("0"))
   const [SamariClaimAmount, setSamariClaimAmount] = useState<BigNumber>(BigNumber.from("0"))
 
-  const distributorContracts = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
+  const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
+
   useEffect(() => {
-    if (userClaimData && account && userClaimData[account] && chainId) {
+    setSamariClaimAmount(BigNumber.from("0"));
+    setSlothiClaimAmount(BigNumber.from("0"));
+  }, [account])
+
+  useEffect(() => {
+    if (userClaimData && account && userClaimData[account] && chainId && distributorContract) {
       var element = userClaimData[account]
       if(element.Slothi){
-        distributorContracts?.getBalance(element.Slothi.amount).then((result) => {
+        distributorContract.getBalance(element.Slothi.amount).then((result) => {
           setSlothiClaimAmount(BigNumber.from(result))
         }) 
       }
@@ -181,7 +189,7 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
         setSlothiClaimAmount(BigNumber.from("0"))
       }
       if(element.Samari){
-        distributorContracts?.getBalanceSamari(element.Samari.amount).then((result) => {
+        distributorContract.getBalanceSamari(element.Samari.amount).then((result) => {
           setSamariClaimAmount(BigNumber.from(result))
         })
       }
@@ -189,7 +197,11 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
         setSamariClaimAmount(BigNumber.from("0"))
       }
     }
-  }, [userClaimData, distributorContracts, chainId, account]
+    else {
+      setSamariClaimAmount(BigNumber.from("0"));
+      setSlothiClaimAmount(BigNumber.from("0"));
+    }
+  }, [userClaimData, distributorContract, chainId, account]
   )
   // user is in blob and contract marks as unclaimed
   return {slth : SlothiClaimAmount, sama: SamariClaimAmount};
@@ -201,41 +213,52 @@ export function useApproved(): {slth: boolean, sama: boolean} {
   const { account, chainId} = useActiveWeb3React();
   const blocknumber = useBlockNumber();
 
-  const [oldAccount, setCurrentAccount] = useState<string>();
   const [SlothiApproved, setSlothiApproved] = useState<boolean>(false)
   const [SamariApproved, setSamariApproved] = useState<boolean>(false)
 
   const slothiContract = useERC20Contract(SLOTHI)
   const samariContract = useERC20Contract(SAMARI)
+
+  useEffect(() => {
+    setSlothiApproved(false);
+    setSamariApproved(false);
+  }, [account])
+
   useEffect(() => {
     if (userClaimData && account && userClaimData[account] && chainId) {
-      if(oldAccount != account){
-        setSlothiApproved(false);
-        setSamariApproved(false);
-        setCurrentAccount(account);
-      }
       var element = userClaimData[account]
-      if(element.Slothi?.amount && claimAvailable.slth && !SlothiApproved){
-        let amount = element.Slothi.amount
-        let success = false
-        slothiContract?.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
-          if(result.gte(amount)){
-            success = true;
-          }
-        }) 
-        setSlothiApproved(success)
+      if(slothiContract){
+        if(element.Slothi?.amount && claimAvailable.slth && !SlothiApproved){
+          let amount = element.Slothi.amount
+          slothiContract.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
+            let success = false;
+            if(result.gte(amount)){
+              success = true;
+            }
+            setSlothiApproved(success)
+          }) 
+        }
       }
-      if(element.Samari?.amount && claimAvailable.sama && !SamariApproved){
-        let amount = element.Samari.amount
-        let success = false
-        samariContract?.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
-          if(result.gte(amount)){
-            success = true
-          }
-        })
-        setSamariApproved(success)
-       
-    }
+      else{
+        setSlothiApproved(false)
+      }
+
+      if(samariContract){
+        if(element.Samari?.amount && claimAvailable.sama && !SamariApproved){
+          let amount = element.Samari.amount
+          let success = false
+          samariContract.allowance(account, SLOTHI_MERKLE_DISTRIBUTER[chainId]).then((result) => {
+            if(result.gte(amount)){
+              success = true
+            }
+            setSamariApproved(success)
+          })       
+      }
+      }
+      else{
+        setSamariApproved(false)
+      }
+
   }
   else{
     setSlothiApproved(false);

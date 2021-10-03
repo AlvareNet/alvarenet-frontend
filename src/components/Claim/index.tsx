@@ -1,14 +1,11 @@
-import { Button, Box, Grid, Typography, CircularProgress, Zoom } from "@material-ui/core"
+import { Button, Grid, Typography, CircularProgress, Zoom } from "@material-ui/core"
 import { useApproveCallback, useApproved, useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/slothi/hooks"
-import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 import ANET from "../../assets/images/ANET.png"
 import NumberFormat from 'react-number-format';
-import { useWeb3React } from "@web3-react/core"
 import { useTranslation } from 'react-i18next';
 import { Dispatch, SetStateAction, useState } from "react";
 import { ContractTransaction } from "@ethersproject/contracts";
 import { useActiveWeb3React } from "../../hooks/useWeb3";
-import { render } from "react-dom";
 
 export default function Claim() {
   const { t } = useTranslation();

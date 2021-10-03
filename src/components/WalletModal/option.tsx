@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import Hexagon from "../../assets/images/hexagon.png"
 
