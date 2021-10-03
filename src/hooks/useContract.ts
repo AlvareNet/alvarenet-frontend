@@ -1,6 +1,6 @@
-import { ERC20__factory, IMerkleDistributer, IMerkleDistributer__factory } from '../contracts'
+import { ERC20__factory, IMerkleDistributer__factory } from '../contracts'
 import { Contract } from '@ethersproject/contracts'
-import { BaseContract, Signer } from 'ethers'
+import { Signer } from 'ethers'
 import { JsonRpcSigner, Provider, Web3Provider } from '@ethersproject/providers'
 import { AddressZero } from '@ethersproject/constants'
 import { useActiveWeb3React } from './useWeb3'

@@ -1,4 +1,4 @@
-import { createTheme, Theme, ThemeOptions } from '@material-ui/core/styles';
+import { createTheme, Theme } from '@material-ui/core/styles';
 
 export const themeOptionsLight: Theme = createTheme( {
   palette: {
