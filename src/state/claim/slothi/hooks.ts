@@ -150,6 +150,10 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
         setSetSamariClaimInfo(false)
       }
     }
+    else{
+      setSetSamariClaimInfo(false)
+      setSetSlothiClaimInfo(false)
+    }
   }, [userClaimData, distributorContract, account, chainId, blocknumber]
   )
   // user is in blob and contract marks as unclaimed
