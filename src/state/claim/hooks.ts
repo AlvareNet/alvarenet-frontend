@@ -94,7 +94,7 @@ function fetchClaim(account: string, chainId: number): Promise<UserClaims> {
 
 // parse distributorContract blob and detect if user has claim data
 // null means we know it does not
-export function useUserClaimData(): UserClaims {
+export function useUserClaimData(): UserClaims | null{
   const { chainId, account } = useActiveWeb3React()
   const [claimInfo, setClaimInfo] = useState<{[account: string] : UserClaims }>({})
 
@@ -122,7 +122,7 @@ export function useUserClaimData(): UserClaims {
       })
   }, [account, chainId])
 
-  return account && chainId && claimInfo[account] ? claimInfo[account] : {}
+  return account && chainId && claimInfo[account] ? claimInfo[account] : null
 }
 
 // check if user is in blob and has not yet claimed UNI
@@ -137,9 +137,9 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
   const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
   
   useEffect(() => {
-    setSetSamariClaimInfo(false);
-    setSetSlothiClaimInfo(false);
-    console.log("Reset")
+    slothiClaim && setSetSamariClaimInfo(false) 
+    samariClaim && setSetSlothiClaimInfo(false) 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
   useEffect(() => {
@@ -147,16 +147,19 @@ export function useUserHasAvailableClaim(): {sama: boolean, slth: boolean} {
       if(userClaimData.Slothi){
         distributorContract.isClaimedSlothi(account).then(
           (result) => {
-            console.log("Set")
-            console.log( account + userClaimData.Slothi?.amount.toString())
-            setSetSlothiClaimInfo(!result)
+            if(result === slothiClaim){
+              setSetSlothiClaimInfo(!result)
+            }
+            
           }
         ); 
       }
       if(userClaimData.Samari){
         distributorContract.isClaimedSamari(account).then(
           (result) => {
-            setSetSamariClaimInfo(!result)
+            if(result === samariClaim){
+              setSetSamariClaimInfo(!result)
+            }
           }
         );
       }
@@ -183,8 +186,9 @@ export function useUserUnclaimedAmount(): {slth: BigNumber, sama: BigNumber} {
   const distributorContract = useMerkleDistributorContract(SLOTHI_MERKLE_DISTRIBUTER)
 
   useEffect(() => {
-    setSamariClaimAmount(BigNumber.from("0"));
-    setSlothiClaimAmount(BigNumber.from("0"));
+    !SlothiClaimAmount.isZero() && setSlothiClaimAmount(BigNumber.from("0"));
+    !SamariClaimAmount.isZero() && setSamariClaimAmount(BigNumber.from("0"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
   useEffect(() => {
@@ -224,8 +228,8 @@ export function useApproved(): {slth: boolean, sama: boolean} {
   const samariContract = useERC20Contract(SAMARI)
 
   useEffect(() => {
-    setSlothiApproved(false);
-    setSamariApproved(false);
+    SlothiApproved && setSlothiApproved(false);
+    SamariApproved && setSamariApproved(false);
   }, [account, chainId])
 
   useEffect(() => {

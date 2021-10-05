@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Dispatch, SetStateAction, useState } from "react";
 import { ContractTransaction } from "@ethersproject/contracts";
 import { useActiveWeb3React } from "../../hooks/useWeb3";
+import { useWeb3React } from "@web3-react/core";
 
 export default function Claim() {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ export default function Claim() {
   const Amountapproved = useApproved()
   const { SlthClaimCallback, SamaClaimCallback } = useClaimCallback()
   const { SlthApproveCallback, SamaApproveCallback } = useApproveCallback()
-  const { active, account } = useActiveWeb3React()
+  const { active } = useWeb3React()
   const [slthinTX, setslthinTX] = useState(false);
   const [samainTX, setsamainTX] = useState(false);
 
@@ -41,7 +42,8 @@ export default function Claim() {
       <Grid container justifyContent="center" boxShadow={2} sx={{
         padding: '30px'
       }}>
-        {active ? <>
+        {active ? 
+        <>
           {available.slth && active && <>
             <Grid item md={12} xs={12}>
               <Grid container justifyContent="space-around">
