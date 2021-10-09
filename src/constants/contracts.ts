@@ -3,7 +3,7 @@ import { SupportedChainId } from "./chains"
 type AddressMap = { [chainId: number]: string }
 
 export const SLOTHI_MERKLE_DISTRIBUTER: AddressMap = {
-    [SupportedChainId.BSC] : '0x5D1A00E7236D2d16A44842e238c4d1FBbF6dBe87',
+    [SupportedChainId.BSC] : '0xf5a1c4396d3265d7cd47083c87ebc985703856e8',
     [SupportedChainId.BSC_TESTNET] : '0xaAb23dEa658d12EEB3028707D4C12562feFDf9EA',
     [SupportedChainId.LOCALHOST] : '0xaAb23dEa658d12EEB3028707D4C12562feFDf9EA'
 }
@@ -22,10 +22,10 @@ export const SAMARI: AddressMap = {
 
 export const CLAIMMAPPINGURL: { TESTNET: string, MAINNET: string } = {
     TESTNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/testnet/output/mappings.json',
-    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/testnet/Dualcontract/mappings.json',
+    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/Final/output/mappings.json',
 }
 
 export const CHUNKURLPREFIX: { TESTNET: string, MAINNET: string } = {
     TESTNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/testnet/output/',
-    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/Dualcontract/output/',
+    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/Final/output/mappings.json',
 }
