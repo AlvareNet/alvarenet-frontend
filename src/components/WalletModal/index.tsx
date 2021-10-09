@@ -56,7 +56,22 @@ export default function WalletModal() {
       const option = SUPPORTED_WALLETS[key]
 
       if (isMobile) {
-        if (!window.web3 && !window.ethereum && option.mobile) {
+        if (option.mobile) {
+          if (option.connector === injected) {
+            // don't show injected if there's no injected provider
+            if (!(window.web3 || window.ethereum)) {
+                return null
+            }
+            // don't return metamask if injected provider isn't metamask
+            else if (option.name === 'MetaMask' && !isMetamask) {
+              return null
+            }
+            // likewise for generic
+            else if (option.name === 'Injected' && isMetamask) {
+              return null
+            }
+          }
+
           return (
             <Option
               onClick={() => {

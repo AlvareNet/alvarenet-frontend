@@ -23,7 +23,7 @@ function fetchClaimMapping(): Promise<ClaimAddressMapping[]> {
   return (
     FETCH_CLAIM_MAPPING_PROMISE ??
     (FETCH_CLAIM_MAPPING_PROMISE = fetch(
-      CLAIMMAPPINGURL.TESTNET
+      CLAIMMAPPINGURL.MAINNET
     )
       .then((res) => res.json())
       .catch((error) => {
@@ -38,7 +38,7 @@ function fetchClaimFile(key: string): Promise<{ [address: string]: UserClaimData
   return (
     FETCH_CLAIM_FILE_PROMISE[key] ??
     (FETCH_CLAIM_FILE_PROMISE[key] = fetch(
-      CHUNKURLPREFIX.TESTNET + key
+      CHUNKURLPREFIX.MAINNET + key
     )
       .then((res) => res.json())
       .catch((error) => {
@@ -99,7 +99,7 @@ export function useUserClaimData(): UserClaims | null{
   const [claimInfo, setClaimInfo] = useState<{[account: string] : UserClaims }>({})
 
   useEffect(() => {
-    if (!account || (chainId !== 56 && chainId !== 97 && chainId !== 1337)) {
+    if (!account || (chainId !== 56 )) {
       return
     }
 

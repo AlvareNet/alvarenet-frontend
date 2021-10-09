@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@binance-chain/bsc-connector": "^1.0.0",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/providers": "^5.4.4",
     "@lingui/macro": "^3.10.2",
