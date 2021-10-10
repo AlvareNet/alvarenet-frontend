@@ -46,7 +46,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
       color: '#4196FC',
       mobile: true,
     },
-    TRUST_WALLET: {
+/*     TRUST_WALLET: {
       connector: injected,
       name: 'Trust Wallet',
       iconURL: METAMASK_ICON_URL,
@@ -99,7 +99,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
       href: null,
       color: '#E8831D',
       mobile: true
-    },
+    }, */
 
     
 }

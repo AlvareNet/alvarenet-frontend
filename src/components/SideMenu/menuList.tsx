@@ -1,10 +1,10 @@
 import { List, ListItem, ListItemIcon, ListItemText, Typography, Button, Grid } from "@material-ui/core"
 import { Home, SwapHoriz } from "@material-ui/icons"
 import { useTranslation } from 'react-i18next';
+import PositionedMenu from "./languageDrawer";
 
 export default function MenuList(props: any) {
     const { t, i18n } = useTranslation();
-
     return (
         <>
             <Grid container direction="column" justifyContent="space-between" sx={{ height: "100%"}} spacing={0}>
@@ -28,17 +28,7 @@ export default function MenuList(props: any) {
                     </List>
                 </Grid>
                 <Grid container item justifyContent="Center">
-                    <div>
-                        <Button key="de" onClick={() => i18n.changeLanguage("de")} style={{ fontWeight: i18n.resolvedLanguage === "de" ? 'bold' : 'normal' }}>
-                            {t('lang.de')}
-                        </Button>|
-                        <Button key="en" onClick={() => i18n.changeLanguage("en")} style={{ fontWeight: i18n.resolvedLanguage === "en" ? 'bold' : 'normal' }}>
-                            {t('lang.en')}
-                        </Button>|
-                        <Button key="cn" onClick={() => i18n.changeLanguage("cn")} style={{ fontWeight: i18n.resolvedLanguage === "cn" ? 'bold' : 'normal' }}>
-                            {t('lang.cn')}
-                        </Button>
-                    </div>
+                    <PositionedMenu/>
                 </Grid>
             </Grid>
         </>
