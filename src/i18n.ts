@@ -17,10 +17,41 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
     resources: {
+      cn: {
+        translation: {
+          lang: {
+            de: "Deutsch",
+            en: "English",
+            cn: "中文"
+          },
+          walletConnect: {
+            buttonConnect: "连接钱包",
+            buttonDisconnect: "取消连接钱包",
+            selectWallet: "选择钱包"
+          },
+          home: {
+            welcome: {
+              title: "欢迎来到 AlvareNet的 dApp",
+              walletConnectInfo: "连接钱包以使用所有的功能."
+            }
+          },
+          sidebar: {
+            home: "主页",
+            swap: "兑换"
+          },
+          claim: {
+            suffix: " ANET 可兑换量",
+            now: "现在兑换",
+            approve: "同意",
+            connectWallet: "请连接你的钱包"
+          }
+        }
+      },
       en: {
         translation: {
           lang: {
-            de: "German",
+            cn: "中文",
+            de: "Deutsch",
             en: "English"
           },
           walletConnect: {
@@ -49,8 +80,9 @@ i18n
       de: {
         translation: {
           lang: {
+            cn: "中文",
             de: "Deutsch",
-            en: "Englisch"
+            en: "English"
           },
           walletConnect: {
             buttonConnect: "Wallet verbinden",

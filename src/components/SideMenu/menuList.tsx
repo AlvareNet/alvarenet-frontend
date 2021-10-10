@@ -34,6 +34,9 @@ export default function MenuList(props: any) {
                         </Button>|
                         <Button key="en" onClick={() => i18n.changeLanguage("en")} style={{ fontWeight: i18n.resolvedLanguage === "en" ? 'bold' : 'normal' }}>
                             {t('lang.en')}
+                        </Button>|
+                        <Button key="cn" onClick={() => i18n.changeLanguage("cn")} style={{ fontWeight: i18n.resolvedLanguage === "cn" ? 'bold' : 'normal' }}>
+                            {t('lang.cn')}
                         </Button>
                     </div>
                 </Grid>
