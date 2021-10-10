@@ -25,6 +25,9 @@ i18n
             cn: "中文"
           },
           walletConnect: {
+            unknownError: "未知错误,请尝试重新连接!",
+            wrongChain: "错误的链!",
+            wrongChainMessageLong: "请在钱包中选择正确的链! 只有bsc,binance smart chain才可以!",
             buttonConnect: "连接钱包",
             buttonDisconnect: "取消连接钱包",
             selectWallet: "选择钱包"
@@ -40,7 +43,7 @@ i18n
             swap: "兑换"
           },
           claim: {
-            suffix: " ANET 可兑换量",
+            suffix: " ALVN 可兑换量",
             now: "现在兑换",
             approve: "同意",
             connectWallet: "请连接你的钱包"
@@ -55,6 +58,9 @@ i18n
             en: "English"
           },
           walletConnect: {
+            unknownError: "Unknown Error, try reloading!",
+            wrongChain: "Wrong Chain!",
+            wrongChainMessageLong: "Wrong chain selected in wallet! Only Binance Smart Chain is supported!",
             buttonConnect: "Connect Wallet",
             buttonDisconnect: "Disconnect",
             selectWallet: "Select Wallet"
@@ -70,7 +76,7 @@ i18n
             swap: "Swap"
           },
           claim: {
-            suffix: " ANET available",
+            suffix: " ALVN available",
             now: "Claim Now",
             approve: "Approve",
             connectWallet: "Please connect your wallet"
@@ -85,6 +91,9 @@ i18n
             en: "English"
           },
           walletConnect: {
+            unknownError: "Unbekannter Error!",
+            wrongChain: "Falsche Chain!",
+            wrongChainMessageLong: "Falsche Chain aktiv im Wallet! Nur Binance Smart Chain ist supportet!",
             buttonConnect: "Wallet verbinden",
             buttonDisconnect: "Wallet trennen",
             selectWallet: "Wallet auswählen"
@@ -100,7 +109,7 @@ i18n
             swap: "Swap"
           },
           claim: {
-            suffix: " ANET verfügbar",
+            suffix: " ALVN verfügbar",
             now: "Jetzt claimen",
             approve: "Approve",
             connectWallet: "Bitte verbinde deine Wallet"

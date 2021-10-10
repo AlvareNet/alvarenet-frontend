@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function WalletModal() {
   const { t } = useTranslation();
-  const { active, connector, activate, deactivate } = useWeb3React()
+  const { active, connector, activate, deactivate, error } = useWeb3React()
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -39,9 +39,12 @@ export default function WalletModal() {
     }
 
     connector &&
-      activate(connector, undefined, true).catch((error) => {
+      activate(connector, undefined, true).then(
+      ).catch((error) => {
         if (error instanceof UnsupportedChainIdError) {
+          alert(t("walletConnect.wrongChainMessageLong"))
           activate(connector) // a little janky...can't use setError because the connector isn't set
+          handleClose()
         }
       })
   }
@@ -144,12 +147,32 @@ export default function WalletModal() {
     })
   }
 
+  function getWalletbutton() {
+    if(error){
+      return (
+        <>
+      {error instanceof UnsupportedChainIdError ? 
+      <Button variant="contained" onClick={handleShow} disableElevation color='error'>
+      {t("walletConnect.wrongChain")}
+      </Button> : <Button variant="contained" onClick={handleShow} disableElevation color='error'>
+      {t("walletConnect.unknownError")}
+      </Button>}
+      </>
+      )
+      
+    }
+    else{
+      return(
+        <Button variant="contained" onClick={active ? handleDisconnect : handleShow} disableElevation>
+        {active ? t("walletConnect.buttonDisconnect") : t("walletConnect.buttonConnect")}
+        </Button>
+      )
+    }
+  }
+
   return (
     <>
-      <Button variant="contained" onClick={active ? handleDisconnect : handleShow} disableElevation>
-        {active ? t("walletConnect.buttonDisconnect") : t("walletConnect.buttonConnect")}
-      </Button>
-
+      {getWalletbutton()}
       <Dialog open={show} onClose={handleClose} sx={{
         background: "rgba(0,0,0,0.5)",
         ['.MuiDialog-paper']: {
