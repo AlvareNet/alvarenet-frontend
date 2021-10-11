@@ -13,13 +13,13 @@ export default function MenuList(props: any) {
                         padding: '15px',
                     }}>Dashboard</Typography>
                     <List sx={{width: "100%"}}>
-                        <ListItem button key={"Home"} onClick={() => props.changePage("Home")}>
+                        <ListItem button key={"Home"} onClick={() => {props.changePage("Home"); props.closeDrawer(false)}}>
                             <ListItemIcon>
                                 <Home />
                             </ListItemIcon>
                             <ListItemText primary={t('sidebar.home')} />
                         </ListItem>
-                        <ListItem button key={"Swap"} onClick={() => props.changePage("Claim")}>
+                        <ListItem button key={"Swap"} onClick={() => {props.changePage("Claim"); props.closeDrawer(false)}}>
                             <ListItemIcon>
                                 <SwapHoriz />
                             </ListItemIcon>

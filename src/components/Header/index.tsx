@@ -34,7 +34,7 @@ export default function Header(props: any) {
                 xs: 'none',
                 md: 'block'
               }
-            }} onClick={() => alert("TEST")} />
+            }} />
             <Grid item sx={{
               display: {
                 xs: 'block',
@@ -85,10 +85,10 @@ export default function Header(props: any) {
         <Box
           sx={{ width: 'auto' }}
           role="presentation"
-          onClick={toggleDrawer(false)}
+          //onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <MenuList changePage={props.changePage} />
+          <MenuList changePage={props.changePage} closeDrawer={setState}/>
         </Box>
       </Drawer>
     </>

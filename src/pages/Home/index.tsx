@@ -10,16 +10,14 @@ export default function Home() {
       <Zoom in={true} timeout={250}>
         <Grid container justifyContent="center" boxShadow={2} sx={{ padding: '30px' }}>
 
-          <Grid container item md={12} xs={12} justifyContent="space-around">
-            <Typography variant="h5">Home</Typography>
-          </Grid>
-
           <Grid container item md={6} xs={12} justifyContent="center">
             <Typography variant="body2">{t('home.welcome.title')}</Typography>
           </Grid>
+
           <Grid container item md={6} xs={12} justifyContent="center">
-            <Typography variant="body2">{active ? account : t('home.welcome.walletConnectInfo')}</Typography>
+            <Typography variant="body2" align="center">{active ? account : t('home.welcome.walletConnectInfo')}</Typography>
           </Grid>
+
         </Grid>
       </Zoom>
     </>
