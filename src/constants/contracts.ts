@@ -3,7 +3,7 @@ import { SupportedChainId } from "./chains"
 type AddressMap = { [chainId: number]: string }
 
 export const SLOTHI_MERKLE_DISTRIBUTER: AddressMap = {
-    [SupportedChainId.BSC] : '0xf5a1c4396d3265d7cd47083c87ebc985703856e8',
+    [SupportedChainId.BSC] : '0xd6DB220c2A375E9d4AB3acfB1ba123b127799798',
 }
 
 export const SLOTHI: AddressMap = {
