@@ -147,14 +147,14 @@ export default function Claim() {
               </Grid>
             </>
           }
-          {active && !available.slth && !available.sama && !dataAvailable &&
+          {active && !available.slth && !available.sama && (!dataAvailable || (!dataAvailable.Samari && !dataAvailable.Slothi)) &&
             <Grid item md={12} xs={12}>
               <Grid container justifyContent="center">
                 <Typography variant="body1" align="center">{t('claim.nothing')}</Typography>
               </Grid>
             </Grid>
           }
-          {active && !available.slth && !available.sama && dataAvailable &&
+          {active && !available.slth && !available.sama && dataAvailable && (dataAvailable.Slothi || dataAvailable.Samari) &&
             <Grid item md={12} xs={12}>
               <Grid container justifyContent="center">
                 <Typography variant="body1" align="center">{t('claim.already')}</Typography>
