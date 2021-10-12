@@ -15,9 +15,9 @@ export const SAMARI: AddressMap = {
 }
 
 export const CLAIMMAPPINGURL: { MAINNET: string } = {
-    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/Final/output/mappings.json',
+    MAINNET : process.env.PUBLIC_URL + '/airdropdata/mappings.json',
 }
 
 export const CHUNKURLPREFIX: { MAINNET: string } = {
-    MAINNET : 'https://raw.githubusercontent.com/AlvareNet/AirdropData/Final/output/',
+    MAINNET : process.env.PUBLIC_URL + '/airdropdata/',
 }
