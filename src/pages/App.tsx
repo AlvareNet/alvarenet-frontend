@@ -66,7 +66,7 @@ function App() {
                 {pageDiv}
               </Page>
             </div>
-            <Fab color="primary" aria-label="add" sx={{ position: 'absolute', bottom: '16px', right: '16px' }} onClick={handleDarkMode}>
+            <Fab color="primary" aria-label="add" sx={{ position: 'fixed', bottom: '16px', right: '16px' }} onClick={handleDarkMode}>
               {mode ? <DarkMode /> : <LightMode />}
             </Fab>
           </AppWrapper>

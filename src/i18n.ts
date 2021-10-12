@@ -48,7 +48,9 @@ i18n
             now: "现在兑换",
             approve: "同意",
             connectWallet: "请连接你的钱包",
-            nothing: "没有ALVN代币可用"
+            nothing: "没有可兑换的 ALVN 币",
+            already: "你已经提取过ALVN 币了",
+            tokenssold: "你没有足够的slth币用来兑换快照中的alvn币. 你是否在快照之后出售过slth币?"
           }
         }
       },
@@ -83,7 +85,9 @@ i18n
             now: "Claim Now",
             approve: "Approve",
             connectWallet: "Please connect your wallet",
-            nothing: "No ALVN token available"
+            nothing: "No ALVN token available",
+            already: "You have already claimed your ALVN tokens",
+            tokenssold: "You dont have enought tokens to swap anymore. Did you sell tokens?"
           }
         }
       },
@@ -118,7 +122,9 @@ i18n
             now: "Jetzt claimen",
             approve: "Approve",
             connectWallet: "Bitte verbinde deine Wallet",
-            nothing: "Es sind keine ALVN Token verfügbar"
+            nothing: "Es sind keine ALVN Token verfügbar",
+            already: "ALVN tokens wurden bereits überführt",
+            tokenssold: "Du hast nicht mehr genug Token zum Tauschen. Hast du Token verkauft?"
           }
         }
       }

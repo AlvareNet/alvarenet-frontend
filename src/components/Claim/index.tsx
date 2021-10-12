@@ -1,5 +1,5 @@
-import { Button, Grid, Typography, CircularProgress, Zoom } from "@material-ui/core"
-import { useApproveCallback, useApproved, useClaimCallback, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/hooks"
+import { Button, Grid, Typography, CircularProgress, Zoom, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core"
+import { useApproveCallback, useApproved, useClaimCallback, useUserClaimData, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 import ANET from "../../assets/images/ANET.png"
 import SAMA from "../../assets/images/SAMA.png"
@@ -12,6 +12,7 @@ import { useWeb3React } from "@web3-react/core";
 
 export default function Claim() {
   const { t } = useTranslation();
+  const dataAvailable = useUserClaimData();
   const number = useUserUnclaimedAmount()
   const available = useUserHasAvailableClaim()
   const Amountapproved = useApproved()
@@ -20,6 +21,8 @@ export default function Claim() {
   const { active } = useWeb3React()
   const [slthinTX, setslthinTX] = useState(false);
   const [samainTX, setsamainTX] = useState(false);
+  const [openErrorDialog, setOpenErrorDialog] = useState(false);
+  const [errormessage, setErrorMessage] = useState("");
 
   //TODO: insert SAMA swap logo
 
@@ -33,12 +36,40 @@ export default function Claim() {
       // reset modal and log error
       .catch((error) => {
         //Insert modal showing error message!
+        let message = t('claim.tokenssold');
+
+        setErrorMessage(message);
+        setOpenErrorDialog(true);
         console.log(error)
       }).finally(() => stateSetter(false))
     
   }
 
+  function closeErrorDialog(){
+    setOpenErrorDialog(false);
+    setErrorMessage("");
+  }
+
   return (
+    <>
+      <Dialog
+        open={openErrorDialog}
+        onClose={closeErrorDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"An error occured"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {errormessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeErrorDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
     <Zoom in={true} timeout={250}>
       <Grid container justifyContent="center" boxShadow={2} sx={{
         padding: '30px'
@@ -116,10 +147,17 @@ export default function Claim() {
               </Grid>
             </>
           }
-          {active && !available.slth && !available.sama &&
+          {active && !available.slth && !available.sama && !dataAvailable &&
             <Grid item md={12} xs={12}>
               <Grid container justifyContent="center">
                 <Typography variant="body1" align="center">{t('claim.nothing')}</Typography>
+              </Grid>
+            </Grid>
+          }
+          {active && !available.slth && !available.sama && dataAvailable &&
+            <Grid item md={12} xs={12}>
+              <Grid container justifyContent="center">
+                <Typography variant="body1" align="center">{t('claim.already')}</Typography>
               </Grid>
             </Grid>
           }
@@ -148,5 +186,6 @@ export default function Claim() {
         }
       </Grid>
     </Zoom>
+    </>
   );
 }
