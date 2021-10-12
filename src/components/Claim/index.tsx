@@ -119,10 +119,9 @@ export default function Claim() {
           {active && !available.slth && !available.sama &&
             <Grid item md={12} xs={12}>
               <Grid container justifyContent="center">
-                <CircularProgress />
+                <Typography variant="body1" align="center">{t('claim.nothing')}</Typography>
               </Grid>
             </Grid>
-
           }
         </>
           :

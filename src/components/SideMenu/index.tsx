@@ -4,7 +4,7 @@ import MenuList from "./menuList"
 
 export default function SideMenu(props: any) {
     //const { active } = useActiveWeb3React()
-
+    const doNothing = () => {}
     return (
         <>
             <Drawer
@@ -27,7 +27,7 @@ export default function SideMenu(props: any) {
                         md: "block"
                     }
                 }} >
-                <MenuList changePage={props.changePage} />
+                <MenuList changePage={props.changePage} closeDrawer={doNothing}/>
             </Drawer>
         </>
     )

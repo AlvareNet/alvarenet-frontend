@@ -15,7 +15,7 @@ export default function Home() {
           </Grid>
 
           <Grid container item md={6} xs={12} justifyContent="center">
-            <Typography variant="body2" align="center">{active ? account : t('home.welcome.walletConnectInfo')}</Typography>
+            <Typography variant="body2" align="center">{active ? t('home.welcome.wallet',{wallet: account}) : t('home.welcome.walletConnectInfo')}</Typography>
           </Grid>
 
         </Grid>

@@ -35,7 +35,8 @@ i18n
           home: {
             welcome: {
               title: "欢迎来到 AlvareNet的 dApp",
-              walletConnectInfo: "连接钱包以使用所有的功能."
+              walletConnectInfo: "连接钱包以使用所有的功能.",
+              wallet: "你的钱包地址: {{wallet}}"
             }
           },
           sidebar: {
@@ -46,7 +47,8 @@ i18n
             suffix: " ALVN 可兑换量",
             now: "现在兑换",
             approve: "同意",
-            connectWallet: "请连接你的钱包"
+            connectWallet: "请连接你的钱包",
+            nothing: "没有ALVN代币可用"
           }
         }
       },
@@ -68,7 +70,8 @@ i18n
           home: {
             welcome: {
               title: "Welcome to AlvareNet's dApp",
-              walletConnectInfo: "Connect your wallet to use all features."
+              walletConnectInfo: "Connect your wallet to use all features.",
+              wallet: "Your Wallet address: {{wallet}}"
             }
           },
           sidebar: {
@@ -79,7 +82,8 @@ i18n
             suffix: " ALVN available",
             now: "Claim Now",
             approve: "Approve",
-            connectWallet: "Please connect your wallet"
+            connectWallet: "Please connect your wallet",
+            nothing: "No ALVN token available"
           }
         }
       },
@@ -101,7 +105,8 @@ i18n
           home: {
             welcome: {
               title: "Willkommen bei AlvareNet's dApp",
-              walletConnectInfo: "Verbinde deine Wallet um alle Features zu nutzen."
+              walletConnectInfo: "Verbinde deine Wallet um alle Features zu nutzen.",
+              wallet: "Deine Wallet Adresse: {{wallet}}"
             }
           },
           sidebar: {
@@ -112,7 +117,8 @@ i18n
             suffix: " ALVN verfügbar",
             now: "Jetzt claimen",
             approve: "Approve",
-            connectWallet: "Bitte verbinde deine Wallet"
+            connectWallet: "Bitte verbinde deine Wallet",
+            nothing: "Es sind keine ALVN Token verfügbar"
           }
         }
       }
