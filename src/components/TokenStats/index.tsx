@@ -26,7 +26,7 @@ export default function TokenStats() {
             <Grid container justifyContent="center" sx={{ padding: '30px' }}>
 
             <Grid container item md={6} xs={12} justifyContent="center">
-              <Typography variant="body2">{t('home.balance.total')} : {balanceString} {t('home.balance.usd')}</Typography>
+              <Typography variant="body2">{t('home.balance.total')} : {balanceString}</Typography>
             </Grid>
     
             <Grid container item md={6} xs={12} justifyContent="center">
@@ -36,7 +36,7 @@ export default function TokenStats() {
             </Grid>
             <Grid container justifyContent="center" sx={{ padding: '30px' }}>
             <Grid container item md={6} xs={12} justifyContent="center">
-            <Typography variant="body2">{t('home.balance.reflection')} : {reflectionString} {t('home.balance.usd')}</Typography>
+            <Typography variant="body2">{t('home.balance.reflection')} : {reflectionString}</Typography>
             </Grid>
 
             <Grid container item md={6} xs={12} justifyContent="center">
