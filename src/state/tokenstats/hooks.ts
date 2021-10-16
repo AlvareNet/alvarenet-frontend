@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ALVARENET, LIQUIDITY } from "../../constants/contracts";
 import { ReflectionEndPoint } from "../../constants/misc";
 import { useERC20Contract, useLiquidityContract } from "../../hooks/useContract";
+import { useBlockNumber } from "../../hooks/useWeb3";
 
 
 interface ReflectionData {
@@ -57,19 +58,21 @@ export function useReflection(account: string | null | undefined) {
 export function useBalance(account: string | null | undefined) {
     const alvareContract = useERC20Contract(ALVARENET);
     const [balanceAmount, setBalanceAmount] = useState(BigNumber.from(0));
+    const blocknumber = useBlockNumber();
     useEffect(() => {
         setBalanceAmount(BigNumber.from(0))
         if (alvareContract && account) {
             alvareContract.balanceOf(account).then((result) => { setBalanceAmount(result) })
         }
     },
-        [account, alvareContract])
+        [account, alvareContract, blocknumber])
     return balanceAmount;
 }
 
 export function usePrice(account: string | null | undefined, amount: BigNumber) {
     const LiquidityContract = useLiquidityContract(LIQUIDITY);
     const [price, setPrice] = useState(BigNumber.from(0));
+    const blocknumber = useBlockNumber();
     useEffect(
         () => {
             setPrice(BigNumber.from(0))
@@ -87,7 +90,7 @@ export function usePrice(account: string | null | undefined, amount: BigNumber) 
                 )
             }
         },
-        [account, LiquidityContract, amount]
+        [account, LiquidityContract, amount, blocknumber]
     )
     return price;
 
