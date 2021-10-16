@@ -32,10 +32,10 @@ export default function Web3Manager({ children }: { children: JSX.Element }) {
         activateNetwork(network)
       }
     }, [triedEager, networkActive, networkError, activateNetwork, active])
-  
+ 
     // when there's no account connected, react to logins (broadly speaking) on the injected provider, if it exists
     useInactiveListener(!triedEager)
-  
+   
     // handle delayed loader state
     const [showLoader, setShowLoader] = useState(false)
     useEffect(() => {

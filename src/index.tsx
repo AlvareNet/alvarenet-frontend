@@ -6,9 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import getLibrary from './utils/getLibrary';
 import { NetworkContextName } from './constants/misc';
-import { themeOptions } from './theme';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ThemeProvider } from '@material-ui/core';
+import './i18n';
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -19,7 +18,6 @@ ReactDOM.render(
           <App />
       </Web3ProviderNetwork>
     </Web3ReactProvider>
-
   </React.StrictMode>,
   document.getElementById('root')
 );

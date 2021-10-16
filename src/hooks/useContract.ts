@@ -1,6 +1,6 @@
-import { IMerkleDistributer, IMerkleDistributer__factory } from '../contracts'
+import { ERC20__factory, IMerkleDistributer__factory, PancakePair__factory } from '../contracts'
 import { Contract } from '@ethersproject/contracts'
-import { BaseContract, Signer } from 'ethers'
+import { Signer } from 'ethers'
 import { JsonRpcSigner, Provider, Web3Provider } from '@ethersproject/providers'
 import { AddressZero } from '@ethersproject/constants'
 import { useActiveWeb3React } from './useWeb3'
@@ -16,7 +16,6 @@ export function useContract<T extends Contract>(
     connector: (address: string, signerOrProvider: Signer | Provider) => T, 
     signerPossible: boolean): T | null {
         const { library, account, chainId } = useActiveWeb3React()
-
         return useMemo(() => {
             if (!ContractAddress || !connector || !library || !chainId) return null
             let address: string | undefined
@@ -37,4 +36,12 @@ export function useContract<T extends Contract>(
 
 export function useMerkleDistributorContract(contract: { [chainId: number]: string }){
     return useContract(contract, IMerkleDistributer__factory.connect, true)
+}
+
+export function useERC20Contract(contract: { [chainId: number]: string }){
+  return useContract(contract, ERC20__factory.connect, true)
+}
+
+export function useLiquidityContract(contract: { [chainId: number]: string }){
+  return useContract(contract, PancakePair__factory.connect, true)
 }

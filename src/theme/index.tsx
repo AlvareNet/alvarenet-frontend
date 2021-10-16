@@ -1,18 +1,32 @@
-import { createTheme, Theme, ThemeOptions } from '@material-ui/core/styles';
+import { createTheme, Theme } from '@material-ui/core/styles';
 
-export const themeOptions: Theme = createTheme({
+export const themeOptionsLight: Theme = createTheme( {
   palette: {
+    mode: "light",
+    background: {
+      default: "#fff"
+    },
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
+      main: "#0F73B7",
+    }
+  },
+  typography: {
+    fontFamily: ['"Roboto','"Black Ops One"','"Open Sans'].join(',')
+  },
+  
+});
+
+export const themeOptionsDark: Theme = createTheme( {
+  palette: {
+    mode: "dark", 
+    background: {
+      default: "#303030"
     },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
+    primary: {
+      main: "#0F73B7",
+    }
+  },
+  typography: {
+    fontFamily: ['"Roboto','"Black Ops One"','"Open Sans'].join(',')
   },
 });
