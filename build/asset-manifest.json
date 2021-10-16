@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e7d5d1c0.chunk.css",
+    "main.js": "/static/js/main.cd468abc.chunk.js",
+    "main.js.map": "/static/js/main.cd468abc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.430c6872.js",
+    "runtime-main.js.map": "/static/js/runtime-main.430c6872.js.map",
+    "static/js/2.18260173.chunk.js": "/static/js/2.18260173.chunk.js",
+    "static/js/2.18260173.chunk.js.map": "/static/js/2.18260173.chunk.js.map",
+    "static/css/3.818011ed.chunk.css": "/static/css/3.818011ed.chunk.css",
+    "static/js/3.5d07fde6.chunk.js": "/static/js/3.5d07fde6.chunk.js",
+    "static/js/3.5d07fde6.chunk.js.map": "/static/js/3.5d07fde6.chunk.js.map",
+    "static/js/4.8b516ad6.chunk.js": "/static/js/4.8b516ad6.chunk.js",
+    "static/js/4.8b516ad6.chunk.js.map": "/static/js/4.8b516ad6.chunk.js.map",
+    "static/js/5.b3248ba3.chunk.js": "/static/js/5.b3248ba3.chunk.js",
+    "static/js/5.b3248ba3.chunk.js.map": "/static/js/5.b3248ba3.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/3.818011ed.chunk.css.map": "/static/css/3.818011ed.chunk.css.map",
+    "static/css/main.e7d5d1c0.chunk.css.map": "/static/css/main.e7d5d1c0.chunk.css.map",
+    "static/js/2.18260173.chunk.js.LICENSE.txt": "/static/js/2.18260173.chunk.js.LICENSE.txt",
+    "static/js/3.5d07fde6.chunk.js.LICENSE.txt": "/static/js/3.5d07fde6.chunk.js.LICENSE.txt",
+    "static/media/ANET.e456322f.png": "/static/media/ANET.e456322f.png",
+    "static/media/AlvareNet_Logo.fc5e0284.png": "/static/media/AlvareNet_Logo.fc5e0284.png",
+    "static/media/SAMA.033808e1.png": "/static/media/SAMA.033808e1.png",
+    "static/media/arrow-right.b7ff963b.svg": "/static/media/arrow-right.b7ff963b.svg",
+    "static/media/banner_black.6aa04789.png": "/static/media/banner_black.6aa04789.png",
+    "static/media/banner_light.997e9a21.png": "/static/media/banner_light.997e9a21.png",
+    "static/media/hexagon.f0a5c396.png": "/static/media/hexagon.f0a5c396.png",
+    "static/media/logo.cdc5f7a9.svg": "/static/media/logo.cdc5f7a9.svg",
+    "static/media/logo_light.a99be523.svg": "/static/media/logo_light.a99be523.svg",
+    "static/media/metamask.02e3ec27.png": "/static/media/metamask.02e3ec27.png",
+    "static/media/walletConnectIcon.488dc369.svg": "/static/media/walletConnectIcon.488dc369.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.430c6872.js",
+    "static/css/3.818011ed.chunk.css",
+    "static/js/3.5d07fde6.chunk.js",
+    "static/css/main.e7d5d1c0.chunk.css",
+    "static/js/main.cd468abc.chunk.js"
+  ]
+}
