@@ -19,7 +19,7 @@ export default function Home() {
           }} >
 
           <Grid container item md={12} xs={12} justifyContent="center">
-            <Typography variant="h3">{t('home.welcome.title')}</Typography>
+            <Typography variant="h4" align="center">{t('home.welcome.title')}</Typography>
           </Grid>
 
           <Grid container item md={12} xs={12} justifyContent="center" sx={{ padding: '30px' }} >
