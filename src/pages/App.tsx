@@ -36,7 +36,6 @@ function App() {
   const [mode, setMode] = useState<Boolean>(false)
   function handleDarkMode() {
     setMode(!mode)
-    console.log(mode)
   }
 
   let pageDiv

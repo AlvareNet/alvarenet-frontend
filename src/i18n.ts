@@ -37,6 +37,13 @@ i18n
               title: "欢迎来到 AlvareNet的 dApp",
               walletConnectInfo: "连接钱包以使用所有的功能.",
               wallet: "你的钱包地址: {{wallet}}"
+            },
+            balance: {
+              total: "Total ALVN Balance",
+              totalvalue: "ALVN value",
+              reflection: "ALVN reflections",
+              reflectionvalue: "Reflection value",
+              usd: "USD"
             }
           },
           sidebar: {
@@ -74,6 +81,13 @@ i18n
               title: "Welcome to AlvareNet's dApp",
               walletConnectInfo: "Connect your wallet to use all features.",
               wallet: "Your Wallet address: {{wallet}}"
+            },
+            balance: {
+              total: "Total ALVN Balance",
+              totalvalue: "ALVN value in USD",
+              reflection: "ALVN reflections",
+              reflectionvalue: "Reflection value",
+              usd: "USD"
             }
           },
           sidebar: {
@@ -111,6 +125,13 @@ i18n
               title: "Willkommen bei AlvareNet's dApp",
               walletConnectInfo: "Verbinde deine Wallet um alle Features zu nutzen.",
               wallet: "Deine Wallet Adresse: {{wallet}}"
+            },
+            balance: {
+              total: "Total ALVN Balance",
+              totalvalue: "ALVN value in USD",
+              reflection: "ALVN reflections",
+              reflectionvalue: "Reflection value",
+              usd: "USD"
             }
           },
           sidebar: {

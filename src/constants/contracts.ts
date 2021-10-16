@@ -14,10 +14,10 @@ export const SAMARI: AddressMap = {
     [SupportedChainId.BSC] : '0xb255cddf7fbaf1cbcc57d16fe2eaffffdbf5a8be',
 }
 
-export const CLAIMMAPPINGURL: { MAINNET: string } = {
-    MAINNET : process.env.PUBLIC_URL + '/airdropdata/mappings.json',
+export const ALVARENET: AddressMap = {
+    [SupportedChainId.BSC] : '0x2488f8ce316cFaa9D9094C87fFf02E4552aC2dbD',
 }
 
-export const CHUNKURLPREFIX: { MAINNET: string } = {
-    MAINNET : process.env.PUBLIC_URL + '/airdropdata/',
+export const LIQUIDITY: AddressMap = {
+    [SupportedChainId.BSC] : '0x46e5b309ec8cbeb6a789e3b3d77b44e205505c3f'
 }

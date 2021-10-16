@@ -1,4 +1,4 @@
-import { ERC20__factory, IMerkleDistributer__factory } from '../contracts'
+import { ERC20__factory, IMerkleDistributer__factory, PancakePair__factory } from '../contracts'
 import { Contract } from '@ethersproject/contracts'
 import { Signer } from 'ethers'
 import { JsonRpcSigner, Provider, Web3Provider } from '@ethersproject/providers'
@@ -40,4 +40,8 @@ export function useMerkleDistributorContract(contract: { [chainId: number]: stri
 
 export function useERC20Contract(contract: { [chainId: number]: string }){
   return useContract(contract, ERC20__factory.connect, true)
+}
+
+export function useLiquidityContract(contract: { [chainId: number]: string }){
+  return useContract(contract, PancakePair__factory.connect, true)
 }

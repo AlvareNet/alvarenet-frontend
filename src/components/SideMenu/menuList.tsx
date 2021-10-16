@@ -7,12 +7,13 @@ export default function MenuList(props: any) {
     const { t, i18n } = useTranslation();
     return (
         <>
-            <Grid container direction="column" justifyContent="space-between" sx={{ height: "100%"}} spacing={0}>
+            <Grid container direction="column" justifyContent="space-between"  sx={{ height: "100%", }} spacing={0}>
                 <Grid container item>
-                    <Typography variant="h6" color="primary" sx={{
+                    <Typography variant="h6" color="primary" textAlign="center" sx={{
                         padding: '15px',
+                        width: "100%"
                     }}>Dashboard</Typography>
-                    <List sx={{width: "100%"}}>
+                    <List sx={{width: "100%"}} >
                         <ListItem button key={"Home"} onClick={() => {props.changePage("Home"); props.closeDrawer(false)}}>
                             <ListItemIcon>
                                 <Home />

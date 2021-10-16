@@ -14,12 +14,13 @@ export default function SideMenu(props: any) {
                     flexShrink: 0,
                     ['.MuiDrawer-paper']: {
                         width: '200px !important',
-                        height: 'calc(100% - 220px)',
-                        marginTop: '220px',
-                        borderTop: '1px solid rgba(0,0,0,0.12)',
-                        borderTopRightRadius: '25px',
-                        WebkitBoxShadow: "10px -5px 10px 0px rgba(0,0,0,0.1)",
-                        boxShadow: "10px -5px 10px 0px rgba(0,0,0,0.1)",
+                        height: 'calc(100% - 224px)',
+                        marginTop: '224px',
+                        
+                        borderTopRightRadius: '5px',
+                        WebkitBoxShadow: "0px 0px 10px -1px rgba(0,0,0,0.75)",
+                        boxShadow: "0px 0px 10px -1px rgba(0,0,0,0.75)",
+                        borderRight: '0px',
                         background: (theme) => theme.palette.mode === "light" ? '#fff' : '#303030' 
                     },
                     display: {

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { isAddress, getAddress } from "@ethersproject/address"
 import { useActiveWeb3React, useBlockNumber } from '../../hooks/useWeb3'
-import { CHUNKURLPREFIX, CLAIMMAPPINGURL, SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../constants/contracts"
+import { SAMARI, SLOTHI, SLOTHI_MERKLE_DISTRIBUTER } from "../../constants/contracts"
 import { useERC20Contract, useMerkleDistributorContract } from "../../hooks/useContract"
 import { BigNumber, ContractTransaction, ethers } from "ethers"
+import { CHUNKURLPREFIX, CLAIMMAPPINGURL } from "../../constants/misc"
 
 interface UserClaims {
   Slothi? : UserClaimData
