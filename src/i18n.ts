@@ -40,7 +40,7 @@ i18n
             },
             balance: {
               total: "Total ALVN Balance",
-              totalvalue: "ALVN value",
+              totalvalue: "Total value",
               reflection: "ALVN reflections",
               reflectionvalue: "Reflection value",
               usd: "USD"
@@ -88,7 +88,7 @@ i18n
               reset: "Reset Wallet",
               forwallet: "Showing info for Wallet Address: {{wallet}}",
               total: "Total ALVN Balance",
-              totalvalue: "ALVN value in USD",
+              totalvalue: "Total value",
               reflection: "ALVN reflections",
               reflectionvalue: "Reflection value",
               usd: "USD"
@@ -134,7 +134,7 @@ i18n
               reset: "Reset Wallet",
               forwallet: "Informationen für Wallet Adresse: {{wallet}}",
               total: "Total ALVN Balance",
-              totalvalue: "ALVN value in USD",
+              totalvalue: "Total value",
               reflection: "ALVN reflections",
               reflectionvalue: "Reflection value",
               usd: "USD"
