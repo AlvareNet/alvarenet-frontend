@@ -40,7 +40,7 @@ i18n
             },
             balance: {
               total: "Total ALVN Balance",
-              totalvalue: "ALVN value",
+              totalvalue: "Total value",
               reflection: "ALVN reflections",
               reflectionvalue: "Reflection value",
               usd: "USD"
@@ -84,7 +84,7 @@ i18n
             },
             balance: {
               total: "Total ALVN Balance",
-              totalvalue: "ALVN value in USD",
+              totalvalue: "Total value",
               reflection: "ALVN reflections",
               reflectionvalue: "Reflection value",
               usd: "USD"
@@ -128,7 +128,7 @@ i18n
             },
             balance: {
               total: "Total ALVN Balance",
-              totalvalue: "ALVN value in USD",
+              totalvalue: "Total value",
               reflection: "ALVN reflections",
               reflectionvalue: "Reflection value",
               usd: "USD"
