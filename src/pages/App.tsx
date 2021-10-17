@@ -3,10 +3,11 @@ import Web3Manager from '../components/Web3Manager';
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
 import styled from 'styled-components';
-import { ThemeProvider, CssBaseline, Fab } from "@material-ui/core"
+import { ThemeProvider, CssBaseline, Fab, DialogTitle, Dialog, DialogContent, Grid } from "@material-ui/core"
 import Claim from "../components/Claim";
 import Home from "./Home"
 import { useState } from "react"
+import lilli from "../assets/images/lilli.jpg"
 import { LightMode, DarkMode } from "@material-ui/icons"
 import { themeOptionsLight, themeOptionsDark } from '../theme'
 
@@ -28,6 +29,8 @@ const Page = styled('div')(({ theme }) => ({
 }));
 
 function App() {
+  const [counter, setCounter] = useState(0);
+  const [open, setOpen] = useState(false);
   const [page, setPage] = useState<string>("Home")
   function handleChange(newPage: string) {
     setPage(newPage)
@@ -36,6 +39,10 @@ function App() {
   const [mode, setMode] = useState<Boolean>(false)
   function handleDarkMode() {
     setMode(!mode)
+    setCounter(counter+1)
+    if(counter > 10){
+      setOpen(true);
+    }
   }
 
   let pageDiv
@@ -60,6 +67,26 @@ function App() {
           <AppWrapper>
             <Header changePage={handleChange} darkMode={mode}/>
             <div>
+            <Dialog
+      open={open}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"An error occured"}
+      </DialogTitle>
+      <DialogContent>
+      <Grid item md={12} sx={{
+                  backgroundImage: `url(${lilli})`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  width: '600px',
+                  height: '300px'
+                }}>
+                </Grid>
+      </DialogContent>
+    </Dialog>
               <SideMenu page={page} changePage={handleChange} />
               <Page>
                 {pageDiv}
