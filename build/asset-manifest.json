@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ad077677.chunk.css",
+    "main.js": "/static/js/main.46ee8cc1.chunk.js",
+    "main.js.map": "/static/js/main.46ee8cc1.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.858a564a.js",
+    "runtime-main.js.map": "/static/js/runtime-main.858a564a.js.map",
+    "static/js/2.6e1e6e10.chunk.js": "/static/js/2.6e1e6e10.chunk.js",
+    "static/js/2.6e1e6e10.chunk.js.map": "/static/js/2.6e1e6e10.chunk.js.map",
+    "static/css/3.818011ed.chunk.css": "/static/css/3.818011ed.chunk.css",
+    "static/js/3.5614530e.chunk.js": "/static/js/3.5614530e.chunk.js",
+    "static/js/3.5614530e.chunk.js.map": "/static/js/3.5614530e.chunk.js.map",
+    "static/js/4.904216f8.chunk.js": "/static/js/4.904216f8.chunk.js",
+    "static/js/4.904216f8.chunk.js.map": "/static/js/4.904216f8.chunk.js.map",
+    "static/js/5.fa141b8e.chunk.js": "/static/js/5.fa141b8e.chunk.js",
+    "static/js/5.fa141b8e.chunk.js.map": "/static/js/5.fa141b8e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/3.818011ed.chunk.css.map": "/static/css/3.818011ed.chunk.css.map",
+    "static/css/main.ad077677.chunk.css.map": "/static/css/main.ad077677.chunk.css.map",
+    "static/js/2.6e1e6e10.chunk.js.LICENSE.txt": "/static/js/2.6e1e6e10.chunk.js.LICENSE.txt",
+    "static/js/3.5614530e.chunk.js.LICENSE.txt": "/static/js/3.5614530e.chunk.js.LICENSE.txt",
+    "static/media/ANET.e456322f.png": "/static/media/ANET.e456322f.png",
+    "static/media/AlvareNet_Logo.fc5e0284.png": "/static/media/AlvareNet_Logo.fc5e0284.png",
+    "static/media/SAMA.033808e1.png": "/static/media/SAMA.033808e1.png",
+    "static/media/arrow-right.b7ff963b.svg": "/static/media/arrow-right.b7ff963b.svg",
+    "static/media/banner_black.6aa04789.png": "/static/media/banner_black.6aa04789.png",
+    "static/media/banner_light.997e9a21.png": "/static/media/banner_light.997e9a21.png",
+    "static/media/hexagon.f0a5c396.png": "/static/media/hexagon.f0a5c396.png",
+    "static/media/lilli.12759c0a.jpg": "/static/media/lilli.12759c0a.jpg",
+    "static/media/logo.cdc5f7a9.svg": "/static/media/logo.cdc5f7a9.svg",
+    "static/media/logo_light.a99be523.svg": "/static/media/logo_light.a99be523.svg",
+    "static/media/metamask.02e3ec27.png": "/static/media/metamask.02e3ec27.png",
+    "static/media/walletConnectIcon.488dc369.svg": "/static/media/walletConnectIcon.488dc369.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.858a564a.js",
+    "static/css/3.818011ed.chunk.css",
+    "static/js/3.5614530e.chunk.js",
+    "static/css/main.ad077677.chunk.css",
+    "static/js/main.46ee8cc1.chunk.js"
+  ]
+}
