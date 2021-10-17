@@ -51,6 +51,8 @@ i18n
             swap: "兑换"
           },
           claim: {
+            reset: "Reset Wallet",
+            forwallet: "Showing info for Wallet Address: {{wallet}}",
             suffix: " ALVN 可兑换量",
             now: "现在兑换",
             approve: "同意",
@@ -80,9 +82,11 @@ i18n
             welcome: {
               title: "Welcome to AlvareNet's dApp",
               walletConnectInfo: "Connect your wallet to use all features.",
-              wallet: "Your Wallet address: {{wallet}}"
+              wallet: "Your connected Wallet address: {{wallet}}"
             },
             balance: {
+              reset: "Reset Wallet",
+              forwallet: "Showing info for Wallet Address: {{wallet}}",
               total: "Total ALVN Balance",
               totalvalue: "ALVN value in USD",
               reflection: "ALVN reflections",
@@ -124,9 +128,11 @@ i18n
             welcome: {
               title: "Willkommen bei AlvareNet's dApp",
               walletConnectInfo: "Verbinde deine Wallet um alle Features zu nutzen.",
-              wallet: "Deine Wallet Adresse: {{wallet}}"
+              wallet: "Deine verbundene Wallet Adresse: {{wallet}}"
             },
             balance: {
+              reset: "Reset Wallet",
+              forwallet: "Informationen für Wallet Adresse: {{wallet}}",
               total: "Total ALVN Balance",
               totalvalue: "ALVN value in USD",
               reflection: "ALVN reflections",

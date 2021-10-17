@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiOutlinedInput-notchedOutline{
+      top:  0px !important
+}
