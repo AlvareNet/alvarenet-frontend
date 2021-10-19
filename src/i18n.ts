@@ -48,7 +48,8 @@ i18n
           },
           sidebar: {
             home: "主页",
-            swap: "兑换"
+            swap: "兑换",
+            admin: "Admin"
           },
           claim: {
             reset: "Reset Wallet",
@@ -96,7 +97,8 @@ i18n
           },
           sidebar: {
             home: "Home",
-            swap: "Swap"
+            swap: "Swap",
+            admin: "Admin"
           },
           claim: {
             suffix: " ALVN available",
@@ -142,7 +144,8 @@ i18n
           },
           sidebar: {
             home: "Start",
-            swap: "Swap"
+            swap: "Swap",
+            admin: "Admin"
           },
           claim: {
             suffix: " ALVN verfügbar",

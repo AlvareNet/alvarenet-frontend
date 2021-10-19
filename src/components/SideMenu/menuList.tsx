@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemIcon, ListItemText, Typography, Button, Grid } from "@material-ui/core"
-import { Home, SwapHoriz } from "@material-ui/icons"
+import { Home, SwapHoriz, AdminPanelSettings } from "@material-ui/icons"
 import { useTranslation } from 'react-i18next';
 import PositionedMenu from "./languageDrawer";
 
@@ -25,6 +25,12 @@ export default function MenuList(props: any) {
                                 <SwapHoriz />
                             </ListItemIcon>
                             <ListItemText primary={t('sidebar.swap')} />
+                        </ListItem>
+                        <ListItem button key={"Admin"} onClick={() => {props.changePage("Admin"); props.closeDrawer(false)}}>
+                            <ListItemIcon>
+                                <AdminPanelSettings />
+                            </ListItemIcon>
+                            <ListItemText primary={t('sidebar.admin')} />
                         </ListItem>
                     </List>
                 </Grid>

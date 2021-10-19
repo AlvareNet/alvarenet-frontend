@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { ContractTransaction } from "@ethersproject/contracts";
 import { useActiveWeb3React } from "../../hooks/useWeb3";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumberToDisplay } from "../../utils"
 
 export default function Claim() {
   const { t } = useTranslation();
@@ -94,7 +95,7 @@ export default function Claim() {
               <Grid container justifyContent="center">
                 <NumberFormat
                   displayType="text"
-                  value={number.slth.div(1000000000).toString()}
+                  value={BigNumberToDisplay(number.slth, 9)}
                   thousandSeparator={true}
                   suffix={t('claim.suffix')}
                 />
@@ -130,7 +131,7 @@ export default function Claim() {
                 <Grid container justifyContent="center">
                   <NumberFormat
                     displayType="text"
-                    value={number.sama.div(1000000000).toString()}
+                    value={BigNumberToDisplay(number.sama, 9)}
                     thousandSeparator={true}
                     suffix={t('claim.suffix')}
                   />
