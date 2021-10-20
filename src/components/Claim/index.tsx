@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, CircularProgress, Zoom, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core"
+import { Button, Grid, Typography, CircularProgress, Zoom, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useApproveCallback, useApproved, useClaimCallback, useUserClaimData, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 import ANET from "../../assets/images/ANET.png"
@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { ContractTransaction } from "@ethersproject/contracts";
 import { useActiveWeb3React } from "../../hooks/useWeb3";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumberToDisplay } from "../../utils"
 
 export default function Claim() {
   const { t } = useTranslation();
@@ -94,7 +95,7 @@ export default function Claim() {
               <Grid container justifyContent="center">
                 <NumberFormat
                   displayType="text"
-                  value={number.slth.div(1000000000).toString()}
+                  value={BigNumberToDisplay(number.slth, 9)}
                   thousandSeparator={true}
                   suffix={t('claim.suffix')}
                 />
@@ -130,7 +131,7 @@ export default function Claim() {
                 <Grid container justifyContent="center">
                   <NumberFormat
                     displayType="text"
-                    value={number.sama.div(1000000000).toString()}
+                    value={BigNumberToDisplay(number.sama, 9)}
                     thousandSeparator={true}
                     suffix={t('claim.suffix')}
                   />

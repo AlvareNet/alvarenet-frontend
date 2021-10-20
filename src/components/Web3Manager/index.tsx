@@ -7,7 +7,7 @@ import { NetworkContextName } from "../../constants/misc"
 import { network } from '../../connectors'
 import Loader from "../Loader"
 import styled from "styled-components"
-import { Button } from "@material-ui/core"
+import { Button } from "@mui/material"
 
 const MessageWrapper = styled.div`
   display: flex;

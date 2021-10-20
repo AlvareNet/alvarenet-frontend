@@ -2,15 +2,32 @@ import './App.css';
 import Web3Manager from '../components/Web3Manager';
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
-import styled from 'styled-components';
-import { ThemeProvider, CssBaseline, Fab } from "@material-ui/core"
+import { styled } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import {
+  Theme,
+  StyledEngineProvider,
+  CssBaseline,
+  Fab,
+  DialogTitle,
+  Dialog,
+  DialogContent,
+  Grid,
+} from "@mui/material";
 import Claim from "../components/Claim";
 import Home from "./Home"
 import { useState } from "react"
-import { LightMode, DarkMode } from "@material-ui/icons"
+import lilli from "../assets/images/lilli.jpg"
+import { LightMode, DarkMode } from "@mui/icons-material"
 import { themeOptionsLight, themeOptionsDark } from '../theme'
+import Admin from '../components/Admin';
 
-const AppWrapper = styled.div`
+
+
+
+
+
+const AppWrapper = styled('div')`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
@@ -28,6 +45,7 @@ const Page = styled('div')(({ theme }) => ({
 }));
 
 function App() {
+  const [open, setOpen] = useState(false);
   const [page, setPage] = useState<string>("Home")
   function handleChange(newPage: string) {
     setPage(newPage)
@@ -47,13 +65,16 @@ function App() {
     case "Claim":
       pageDiv = <Claim />
       break
+    case "Admin":
+      pageDiv = <Admin />
+      break
     default:
       pageDiv = <Home />
       break
   }
 
-  return (
-    <>
+  return <>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={mode ? themeOptionsLight : themeOptionsDark}>
         <CssBaseline />
         <Web3Manager>
@@ -71,8 +92,8 @@ function App() {
           </AppWrapper>
         </Web3Manager>
       </ThemeProvider>
-    </>
-  );
+    </StyledEngineProvider>
+  </>;
 }
 
 export default App;

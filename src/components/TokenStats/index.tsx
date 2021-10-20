@@ -1,17 +1,10 @@
-import { formatUnits } from "@ethersproject/units";
-import { Button, Grid, makeStyles, TextField, Typography } from "@material-ui/core";
-import { borderBottom, textAlign } from "@material-ui/system";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
-import { commify } from "ethers/lib/utils";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useBalance, useReflection, usePrice } from "../../state/tokenstats/hooks";
-
-const negativesix = 1000000;
-const negative15 = 1000000000000000;
-
-
+import { BigNumberToDisplay } from "../../utils";
 
 export default function TokenStats() {
   const { t } = useTranslation();
@@ -67,10 +60,10 @@ export default function TokenStats() {
   const balancePrice = usePrice(account_string, balance);
   const reflection = useReflection(account_string);
   const reflectionPrice = usePrice(account_string, reflection);
-  var reflectionString = commify(formatUnits(reflection.div(negativesix), 3));
-  var balanceString = commify(formatUnits(balance.div(negativesix), 3));
-  var reflectionPriceString = commify(formatUnits(reflectionPrice.div(negative15), 3));
-  var balancePriceString = commify(formatUnits(balancePrice.div(negative15), 3));
+  var reflectionString = BigNumberToDisplay(reflection, 9);
+  var balanceString = BigNumberToDisplay(balance, 9);
+  var reflectionPriceString = BigNumberToDisplay(reflectionPrice, 18);
+  var balancePriceString = BigNumberToDisplay(balancePrice, 18);
   return (
     <>
       <Grid container item md={12} xs={12} justifyContent="center" sx={{ padding: '30px' }} >
