@@ -1,3 +1,4 @@
+import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import { AdminWalletEndpoint, EarningsEndpoint } from "../../constants/misc"
 
@@ -5,13 +6,22 @@ interface AdminPermission {
     allowed: boolean
 }
 
-interface EarningsData {
+interface EarningsResult {
     balance: string;
     marketing: string;
     itservice: string;
     salary: string;
     exchange: string;
     savings: string;
+}
+
+interface EarningsData {
+    balance: ethers.BigNumber;
+    marketing: ethers.BigNumber;
+    itservice: ethers.BigNumber;
+    salary: ethers.BigNumber;
+    exchange: ethers.BigNumber;
+    savings: ethers.BigNumber;
 }
 
 function getAdminWallet(address: string): Promise<AdminPermission> {
@@ -29,7 +39,7 @@ function getAdminWallet(address: string): Promise<AdminPermission> {
     )
 }
 
-function getEarningsData(data: string): Promise<EarningsData> {
+function getEarningsData(data: string): Promise<EarningsResult> {
     return (
         fetch(
             EarningsEndpoint + data,
@@ -57,22 +67,34 @@ export function useAdminAccount(account: string | null | undefined): boolean {
     return admin;
 }
 
-export function useWalletEarnings(account: string | null | undefined, start: number | null, stop: number | null): EarningsData | null {
+export function useWalletEarnings(account: string | null | undefined, start: Date | null, stop: Date | null): EarningsData | null {
     const [data, setData] = useState<EarningsData | null>(null);
     useEffect(() => {
         setData(null);
         if (account) {
             var data = "";
             if(start){
-                data = data + "?start=" + (start/1000).toString();
+                data = data + "&start=" + (start.valueOf()/1000).toString();
             }
             if(stop){
-                data = data + "?stop=" + (stop/1000).toString();
+                data = data + "&stop=" + (stop.valueOf()/1000).toString();
             }
-            getEarningsData(data).then((result) => setData(result))
+            getEarningsData(data).then((result) => 
+            {
+                var newObject: EarningsData = {
+                    marketing : ethers.BigNumber.from(result.marketing),
+                    itservice : ethers.BigNumber.from(result.itservice),
+                    salary : ethers.BigNumber.from(result.salary),
+                    savings : ethers.BigNumber.from(result.savings),
+                    exchange : ethers.BigNumber.from(result.exchange),
+                    balance : ethers.BigNumber.from(result.balance)
+                }
+                setData(newObject);
+            }
+            )
         }
     },
-        [account]
+        [account, start, stop]
     );
     return data;
 }

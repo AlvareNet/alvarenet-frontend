@@ -1,18 +1,10 @@
-import { formatUnits } from "@ethersproject/units";
-import { Button, Grid, makeStyles, TextField, Typography } from "@material-ui/core";
-import { borderBottom, textAlign } from "@material-ui/system";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
-import { commify } from "ethers/lib/utils";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useBalance, useReflection, usePrice } from "../../state/tokenstats/hooks";
 import { BigNumberToDisplay } from "../../utils";
-
-const negativesix = 1000000;
-const negative15 = 1000000000000000;
-
-
 
 export default function TokenStats() {
   const { t } = useTranslation();

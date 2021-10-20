@@ -24,6 +24,23 @@ i18n
             en: "English",
             cn: "中文"
           },
+          admin: {
+            header : "Admin Interface",
+            subheader : "Showing earnings from Project Fee",
+            selectstarttime: "Set Start Time",
+            selectstoptime : "Set Stop time",
+            reset : "Reset timeframe",
+            alltime : "Showing all time earnings",
+            starttime : "Showing Earnings from the {{date}}",
+            stoptime : "Showing Earnings until the {{date}}",
+            between : "Showing Earnings between the {{start}} and the {{stop}}",
+            marketing: "Marketing",
+            itservice: "IT-Services",
+            salary : "Salaries",
+            exchange : "Exchange listing",
+            savings : "Savings",
+            balance : "Total"
+          },
           walletConnect: {
             unknownError: "未知错误,请尝试重新连接!",
             wrongChain: "错误的链!",
@@ -71,6 +88,23 @@ i18n
             de: "Deutsch",
             en: "English"
           },
+          admin: {
+            header : "Admin Interface",
+            subheader : "Showing earnings from Project Fee",
+            selectstarttime: "Set Start Time",
+            selectstoptime : "Set Stop time",
+            reset : "Reset timeframe",
+            alltime : "Showing all time earnings",
+            starttime : "Showing Earnings from the {{date}}",
+            stoptime : "Showing Earnings until the {{date}}",
+            between : "Showing Earnings between the {{start}} and the {{stop}}",
+            marketing: "Marketing",
+            itservice: "IT-Services",
+            salary : "Salaries",
+            exchange : "Exchange listing",
+            savings : "Savings",
+            balance : "Total"
+          },
           walletConnect: {
             unknownError: "Unknown Error, try reloading!",
             wrongChain: "Wrong Chain!",
@@ -117,6 +151,23 @@ i18n
             cn: "中文",
             de: "Deutsch",
             en: "English"
+          },
+          admin: {
+            header : "Admin Interface",
+            subheader : "Showing earnings from Project Fee",
+            selectstarttime: "Set Start Time",
+            selectstoptime : "Set Stop time",
+            reset : "Reset timeframe",
+            alltime : "Showing all time earnings",
+            starttime : "Showing Earnings from the {{date}}",
+            stoptime : "Showing Earnings until the {{date}}",
+            between : "Showing Earnings between the {{start}} and the {{stop}}",
+            marketing: "Marketing",
+            itservice: "IT-Services",
+            salary : "Salaries",
+            exchange : "Exchange listing",
+            savings : "Savings",
+            balance : "Total"
           },
           walletConnect: {
             unknownError: "Unbekannter Error!",

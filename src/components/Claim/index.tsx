@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, CircularProgress, Zoom, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core"
+import { Button, Grid, Typography, CircularProgress, Zoom, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useApproveCallback, useApproved, useClaimCallback, useUserClaimData, useUserHasAvailableClaim, useUserUnclaimedAmount } from "../../state/claim/hooks"
 import AlvareNet_Logo from "../../assets/images/AlvareNet_Logo.png"
 import ANET from "../../assets/images/ANET.png"
