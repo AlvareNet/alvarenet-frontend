@@ -1,6 +1,6 @@
-import { createTheme, Theme } from '@material-ui/core/styles';
+import { createTheme, Theme } from '@mui/material/styles';
 
-export const themeOptionsLight: Theme = createTheme( {
+export const themeOptionsLight: Theme = createTheme({
   palette: {
     mode: "light",
     background: {
@@ -16,7 +16,7 @@ export const themeOptionsLight: Theme = createTheme( {
   
 });
 
-export const themeOptionsDark: Theme = createTheme( {
+export const themeOptionsDark: Theme = createTheme(({
   palette: {
     mode: "dark", 
     background: {
@@ -29,4 +29,4 @@ export const themeOptionsDark: Theme = createTheme( {
   typography: {
     fontFamily: ['"Roboto','"Black Ops One"','"Open Sans'].join(',')
   },
-});
+}));

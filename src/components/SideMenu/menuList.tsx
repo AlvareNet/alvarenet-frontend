@@ -1,10 +1,14 @@
-import { List, ListItem, ListItemIcon, ListItemText, Typography, Button, Grid } from "@material-ui/core"
-import { Home, SwapHoriz } from "@material-ui/icons"
+import { List, ListItem, ListItemIcon, ListItemText, Typography, Button, Grid } from "@mui/material"
+import { Home, SwapHoriz, AdminPanelSettings } from "@mui/icons-material"
 import { useTranslation } from 'react-i18next';
 import PositionedMenu from "./languageDrawer";
+import { useWeb3React } from "@web3-react/core";
+import { useAdminAccount } from "../../state/admin/hooks";
 
 export default function MenuList(props: any) {
     const { t, i18n } = useTranslation();
+    const {account} = useWeb3React();
+    const isAdmin = useAdminAccount(account);
     return (
         <>
             <Grid container direction="column" justifyContent="space-between"  sx={{ height: "100%", }} spacing={0}>
@@ -26,6 +30,14 @@ export default function MenuList(props: any) {
                             </ListItemIcon>
                             <ListItemText primary={t('sidebar.swap')} />
                         </ListItem>
+                        {isAdmin &&
+                        <ListItem button key={"Admin"} onClick={() => {props.changePage("Admin"); props.closeDrawer(false)}}>
+                            <ListItemIcon>
+                                <AdminPanelSettings />
+                            </ListItemIcon>
+                            <ListItemText primary={t('sidebar.admin')} />
+                        </ListItem>
+}
                     </List>
                 </Grid>
                 <Grid container item justifyContent="Center">

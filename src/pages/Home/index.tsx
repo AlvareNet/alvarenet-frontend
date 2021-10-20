@@ -1,11 +1,8 @@
-import { Grid, Typography, Zoom } from "@material-ui/core"
-import { color } from "@material-ui/system";
-import { useWeb3React } from "@web3-react/core"
+import { Grid, Typography, Zoom } from "@mui/material"
 import { useTranslation } from 'react-i18next';
 import TokenStats from "../../components/TokenStats";
 
 export default function Home() {
-  const { active, account } = useWeb3React()
   const { t } = useTranslation();
   return (
     <>

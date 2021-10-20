@@ -1,5 +1,5 @@
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import { LanguageRounded } from '@material-ui/icons';
+import { Button, Menu, MenuItem } from '@mui/material';
+import { LanguageRounded } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

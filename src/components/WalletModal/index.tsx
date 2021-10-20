@@ -7,7 +7,7 @@ import { SUPPORTED_WALLETS } from "../../constants/wallet"
 import Option from "./option"
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
-import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material"
 import { useTranslation } from 'react-i18next';
 
 export default function WalletModal() {
