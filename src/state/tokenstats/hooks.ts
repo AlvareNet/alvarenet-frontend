@@ -43,10 +43,10 @@ export function useReflection(account: string | null | undefined) {
     const walletData = useWalletData(account);
     const balance = useBalance(account);
 
-    const [reflectionAmount, setReflectionAmount] = useState(BigNumber.from(0));
+    const [reflectionAmount, setReflectionAmount] = useState<BigNumber | null>(null);
     useEffect(() => {
-        setReflectionAmount(BigNumber.from(0))
-        if (walletData && walletData.balance && account) {
+        setReflectionAmount(null)
+        if (walletData && walletData.balance && account && balance) {
             let transferBalance = BigNumber.from(walletData.balance);
             setReflectionAmount(balance.sub(transferBalance));
         }
@@ -57,10 +57,10 @@ export function useReflection(account: string | null | undefined) {
 
 export function useBalance(account: string | null | undefined) {
     const alvareContract = useERC20Contract(ALVARENET);
-    const [balanceAmount, setBalanceAmount] = useState(BigNumber.from(0));
+    const [balanceAmount, setBalanceAmount] = useState<BigNumber | null>(null);
     const blocknumber = useBlockNumber();
     useEffect(() => {
-        setBalanceAmount(BigNumber.from(0))
+        setBalanceAmount(null)
         if (alvareContract && account) {
             alvareContract.balanceOf(account).then((result) => { setBalanceAmount(result) })
         }
@@ -69,14 +69,14 @@ export function useBalance(account: string | null | undefined) {
     return balanceAmount;
 }
 
-export function usePrice(account: string | null | undefined, amount: BigNumber) {
+export function usePrice(account: string | null | undefined, amount: BigNumber | null) {
     const LiquidityContract = useLiquidityContract(LIQUIDITY);
-    const [price, setPrice] = useState(BigNumber.from(0));
+    const [price, setPrice] = useState<BigNumber | null>(null);
     const blocknumber = useBlockNumber();
     useEffect(
         () => {
-            setPrice(BigNumber.from(0))
-            if (!amount.isZero() && !amount.isNegative() && account && LiquidityContract) {
+            setPrice(null)
+            if (amount && !amount.isZero() && !amount.isNegative() && account && LiquidityContract) {
                 LiquidityContract.getReserves().then(
                     (result) => {
                         let alvarebalance = result[0];

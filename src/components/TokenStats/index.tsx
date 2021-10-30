@@ -1,4 +1,4 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
@@ -60,22 +60,18 @@ export default function TokenStats() {
   const balancePrice = usePrice(account_string, balance);
   const reflection = useReflection(account_string);
   const reflectionPrice = usePrice(account_string, reflection);
-  var reflectionString = BigNumberToDisplay(reflection, 9);
-  var balanceString = BigNumberToDisplay(balance, 9);
-  var reflectionPriceString = BigNumberToDisplay(reflectionPrice, 18);
-  var balancePriceString = BigNumberToDisplay(balancePrice, 18);
   return (
     <>
       <Grid container item md={12} xs={12} justifyContent="center" sx={{ padding: '30px' }} >
         <Typography variant="body2" align="center">{active ? t('home.welcome.wallet', { wallet: account }) : t('home.welcome.walletConnectInfo')}</Typography>
       </Grid>
 
-      <Grid container item md={12} xs={12} justifyContent="center" sx={{  padding: '15px'}} >
+      <Grid container item md={12} xs={12} justifyContent="center" sx={{ padding: '15px' }} >
         <TextField
           id="walletInput"
-          style = {{textAlign: 'center' }}
-          sx = {{maxWidth: '500px'}}
-          inputProps={{style: { textAlign: 'center' }}} 
+          style={{ textAlign: 'center' }}
+          sx={{ maxWidth: '500px' }}
+          inputProps={{ style: { textAlign: 'center' } }}
           placeholder="Look up a wallet"
           value={account_input}
           onChange={handleChange}
@@ -85,41 +81,45 @@ export default function TokenStats() {
           fullWidth
         />
       </Grid>
-      { lookup &&
-      <>
-      <Grid container item md={12} xs={12} justifyContent="center"  >
-        <Button onClick={() => reset()} variant="contained">{t('home.balance.reset')}</Button>
-      </Grid>
-      <Grid container item md={12} xs={12} justifyContent="center" sx={{ padding: '15px' }} >
-        <Typography variant="body2" align="center">{t('home.balance.forwallet', { wallet: account_string })}</Typography>
-      </Grid>
-      </>
+      {lookup &&
+        <>
+          <Grid container item md={12} xs={12} justifyContent="center"  >
+            <Button onClick={() => reset()} variant="contained">{t('home.balance.reset')}</Button>
+          </Grid>
+          <Grid container item md={12} xs={12} justifyContent="center" sx={{ padding: '15px' }} >
+            <Typography variant="body2" align="center">{t('home.balance.forwallet', { wallet: account_string })}</Typography>
+          </Grid>
+        </>
       }
       <Grid container justifyContent="center" sx={{ padding: '10px' }}>
 
-        {account_string &&
+        {(account_string && balance && balancePrice && reflection && reflectionPrice) ?
           <>
             <Grid container justifyContent="center" sx={{ padding: '10px' }}>
 
               <Grid container item md={6} xs={12} justifyContent="center">
-                <Typography variant="body2">{t('home.balance.total')} : {balanceString}</Typography>
+                <Typography variant="body2">{t('home.balance.total')} : {BigNumberToDisplay(balance, 9)}</Typography>
               </Grid>
 
               <Grid container item md={6} xs={12} justifyContent="center">
-                <Typography variant="body2">{t('home.balance.totalvalue')} : {balancePriceString} {t('home.balance.usd')}</Typography>
+                <Typography variant="body2">{t('home.balance.totalvalue')} : {BigNumberToDisplay(balancePrice, 18)} {t('home.balance.usd')}</Typography>
               </Grid>
 
             </Grid>
             <Grid container justifyContent="center" sx={{ padding: '10px' }}>
               <Grid container item md={6} xs={12} justifyContent="center">
-                <Typography variant="body2">{t('home.balance.reflection')} : {reflectionString}</Typography>
+                <Typography variant="body2">{t('home.balance.reflection')} : {BigNumberToDisplay(reflection, 9)}</Typography>
               </Grid>
 
               <Grid container item md={6} xs={12} justifyContent="center">
-                <Typography variant="body2">{t('home.balance.reflectionvalue')} : {reflectionPriceString} {t('home.balance.usd')}</Typography>
+                <Typography variant="body2">{t('home.balance.reflectionvalue')} : {BigNumberToDisplay(reflectionPrice, 18)} {t('home.balance.usd')}</Typography>
               </Grid>
             </Grid>
           </>
+          :
+          <Grid container justifyContent="center" sx={{ marginTop: "30px" }}>
+            <CircularProgress />
+          </Grid>
         }
       </Grid>
     </>
